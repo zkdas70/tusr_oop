@@ -13,7 +13,8 @@ public class main extends Application {
         /// Метод отвечающий за загрузку и старт GUI
 
         // заррузка шаблонов
-        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("ItemsTab.fxml"));
+        //FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("ItemsTab.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("/com/zkdas/oop/mainWindow.fxml"));
 
         // создание сцен (сцена это содержимое окна)
         Scene scene = new Scene(fxmlLoader.load());
@@ -23,8 +24,8 @@ public class main extends Application {
         // присваеваем сцену окну
         stage.setScene(scene);
 
-        stage.setMinWidth(500);
-        stage.setMinHeight(400);
+        stage.setMinWidth(600);
+        stage.setMinHeight(500);
         // запускаем отображение окна
         stage.show();
     }

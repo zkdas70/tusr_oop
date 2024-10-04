@@ -1,85 +1,13 @@
-package com.zkdas.oop;
+package com.zkdas.oop.controller;
 
 import com.zkdas.oop.model.Item;
+import com.zkdas.oop.service.DataRequiredValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
-interface TextControl {
-    String getText();
-
-    String getId();
-
-    void setStyle(String style);
-}
-
-class TextFieldWrapper implements TextControl {
-    private final TextField field;
-
-    public TextFieldWrapper(TextField textField) {
-        this.field = textField;
-    }
-
-    @Override
-    public String getText() {
-        return field.getText();
-    }
-
-    @Override
-    public String getId() {
-        return field.getId();
-    }
-
-    @Override
-    public void setStyle(String style) {
-        field.setStyle(style);
-    }
-}
-
-class TextAreaWrapper implements TextControl {
-    private final TextArea field;
-
-    public TextAreaWrapper(TextArea textField) {
-        this.field = textField;
-    }
-
-    @Override
-    public String getText() {
-        return field.getText();
-    }
-
-    @Override
-    public String getId() {
-        return field.getId();
-    }
-
-    @Override
-    public void setStyle(String style) {
-        field.setStyle(style);
-    }
-}
-
-class ItemValidator {
-    private int _errors_counter = 0;
-
-    public <T extends TextControl> void validateField(T field) {
-        try {
-            if (field.getText().isEmpty()) {
-                throw new Exception("поле" + field.getId() + "пустое");
-            }
-            field.setStyle(""); // Сбросить стиль, чтобы вернуть стандартный;
-        } catch (Exception ex) {
-            _errors_counter++;
-            field.setStyle("-fx-background-color: red;");
-        }
-    }
-
-    public boolean IsNotErrors() {
-        return _errors_counter == 0;
-    }
-}
 
 class ItemForList extends Item {
     public ItemForList(String name, String info, float cost) throws Exception {
@@ -111,11 +39,11 @@ public class ItemsTabController {
     @FXML
     private ListView<ItemForList> items_listView;
 
-    private  int selected_index = -1;
+    private  int selected_index = -1; // -1 техническое значени (выбрано нечего)
 
     private ObservableList<ItemForList> items; // список элементов в ListView
 
-    private void clearField(){
+    private void clearFields(){
         id_field.setText("");
         cost_field.setText("");
         name_field.setText("");
@@ -134,12 +62,13 @@ public class ItemsTabController {
         items_listView.setOnMouseClicked(event -> {
             MultipleSelectionModel<ItemForList> SelectionModel = items_listView.getSelectionModel();
 
+            // получение выделеного элемента (как обьекта)
             ItemForList selectedItem = SelectionModel.getSelectedItem();
             if (selectedItem != null) {
-                System.out.println("ID выбранного элемента: " + selectedItem.getId());
-
+                // получение id выделеного элемента
                 selected_index = SelectionModel.getSelectedIndex();
 
+                // задаем значения полям
                 id_field.setText(String.valueOf(selectedItem.getId()));
                 cost_field.setText(String.valueOf(selectedItem.getCost()));
                 name_field.setText(selectedItem.getName());
@@ -151,29 +80,31 @@ public class ItemsTabController {
 
     @FXML
     private void add_btn_click(ActionEvent e) throws Exception {
-        // обработчик нажатия на кноку remove
-        System.out.print("remove_btn_click\n");
+        // обработчик нажатия на кноку add
+        DataRequiredValidator validator = new DataRequiredValidator();
 
-        ItemValidator validator = new ItemValidator();
-
+        // валидация полей
         //validator.validateField(id_field);
-        validator.validateField(new TextFieldWrapper(cost_field));
-        validator.validateField(new TextAreaWrapper(name_field));
-        validator.validateField(new TextAreaWrapper(description_field));
+        validator.validateNumberField(cost_field);
+        validator.validateField(name_field);
+        validator.validateField(description_field);
 
+        // если все поля прошли валедацию
         if (validator.IsNotErrors()) {
             items.add(new ItemForList(name_field.getText(), description_field.getText(),
                     Float.parseFloat(cost_field.getText())));
-            clearField();
+            clearFields();
         }
     }
 
     @FXML
     private void remove_btn_click(ActionEvent e) throws Exception {
-        // обработчик нажатия на кноку add
+        // обработчик нажатия на кноку remove
+        // если выбрано поле
         if (selected_index >= 0) {
             items.remove(selected_index);
+            clearFields();
+            selected_index = -1;
         }
-        clearField();
     }
 }

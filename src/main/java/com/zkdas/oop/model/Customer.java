@@ -12,11 +12,10 @@ public class Customer
 
     private static IdGenerator _idGenerator = new IdGenerator(); // генератор id принажаший не обьектт а классу
     private int _id;
-    private LimitedSting _fulname;
+    protected LimitedSting _fulname;
     private LimitedSting _address;
-    private LimitedFloat _cost;
 
-    public Customer(String fulname, String address, float cost) throws Exception
+    public Customer(String fulname, String address) throws Exception
     {
         _id = _idGenerator.get_next_id();
 
@@ -27,4 +26,19 @@ public class Customer
         _address = new LimitedSting(500, address);
     }
 
+    public int getId(){
+        return _id;
+    }
+    public String getFulname(){
+        return _fulname.get_data();
+    }
+    public String getAddress(){
+        return _address.get_data();
+    }
+    public void setFulname(String fulname) throws Exception {
+        _fulname.setData(fulname);
+    }
+    public void setAddress(String address) throws Exception {
+        _address.setData(address);
+    }
 }
