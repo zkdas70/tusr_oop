@@ -1,17 +1,16 @@
 package com.zkdas.oop.model;
 
 import com.zkdas.oop.service.IdGenerator;
-import com.zkdas.oop.service.limitedStrinds.LimitedFloat;
 import com.zkdas.oop.service.limitedStrinds.LimitedSting;
 import com.zkdas.oop.service.ValueValidator;
 /// <summary>
-///  класс модель дагнных Customer
+///  класс модель данных Customer
 /// </summary>
 public class Customer
 {
 
-    private static IdGenerator _idGenerator = new IdGenerator(); // генератор id принажаший не обьектт а классу
-    private int _id;
+    private static final IdGenerator _idGenerator = new IdGenerator(); // генератор id принажавший не объект, а классу
+    private final int  _id;
     protected LimitedSting _fulname;
     private LimitedSting _address;
 
@@ -19,11 +18,8 @@ public class Customer
     {
         _id = _idGenerator.get_next_id();
 
-        ValueValidator.AssertStringOnLength(fulname, 200, "name");
-        ValueValidator.AssertStringOnLength(address, 500, "info");
-
-        _fulname = new LimitedSting(200, fulname);
-        _address = new LimitedSting(500, address);
+        setFulname(fulname);
+        setAddress(address);
     }
 
     public int getId(){
@@ -36,9 +32,13 @@ public class Customer
         return _address.get_data();
     }
     public void setFulname(String fulname) throws Exception {
-        _fulname.setData(fulname);
+        ValueValidator.AssertStringOnLength(fulname, 200, "name");
+
+        _fulname = new LimitedSting(200, fulname);
     }
     public void setAddress(String address) throws Exception {
-        _address.setData(address);
+        ValueValidator.AssertStringOnLength(address, 500, "address");
+
+        _address = new LimitedSting(500, address);
     }
 }

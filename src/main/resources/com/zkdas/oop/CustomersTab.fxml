@@ -76,7 +76,7 @@
                             <Insets bottom="4.0" right="4.0" top="4.0" />
                         </padding>
                     </HBox>
-               <ListView fx:id="сustomers_listView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+               <ListView fx:id="customers_listView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                     <Label text="Customers">
                         <font>
                             <Font name="System Bold" size="12.0" />

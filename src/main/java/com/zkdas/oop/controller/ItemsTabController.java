@@ -21,11 +21,6 @@ class ItemForList extends Item {
 }
 
 public class ItemsTabController {
-    // кнопки
-    @FXML
-    private Button add_btn;
-    @FXML
-    private Button remove_btn;
     // текстовые поля
     @FXML
     private TextField id_field;
@@ -39,7 +34,7 @@ public class ItemsTabController {
     @FXML
     private ListView<ItemForList> items_listView;
 
-    private  int selected_index = -1; // -1 техническое значени (выбрано нечего)
+    private  int selected_index = -1; // -1 техническое значение (выбрано нечего)
 
     private ObservableList<ItemForList> items; // список элементов в ListView
 
@@ -62,10 +57,10 @@ public class ItemsTabController {
         items_listView.setOnMouseClicked(event -> {
             MultipleSelectionModel<ItemForList> SelectionModel = items_listView.getSelectionModel();
 
-            // получение выделеного элемента (как обьекта)
+            // получение выделенного элемента (как объекта)
             ItemForList selectedItem = SelectionModel.getSelectedItem();
             if (selectedItem != null) {
-                // получение id выделеного элемента
+                // получение id выделенного элемента
                 selected_index = SelectionModel.getSelectedIndex();
 
                 // задаем значения полям
@@ -79,8 +74,8 @@ public class ItemsTabController {
 
 
     @FXML
-    private void add_btn_click(ActionEvent e) throws Exception {
-        // обработчик нажатия на кноку add
+    private void add_btn_click(ActionEvent ignoredE) throws Exception {
+        // обработчик нажатия на кнопку add
         DataRequiredValidator validator = new DataRequiredValidator();
 
         // валидация полей
@@ -89,7 +84,7 @@ public class ItemsTabController {
         validator.validateField(name_field);
         validator.validateField(description_field);
 
-        // если все поля прошли валедацию
+        // если все поля прошли валидацию
         if (validator.IsNotErrors()) {
             items.add(new ItemForList(name_field.getText(), description_field.getText(),
                     Float.parseFloat(cost_field.getText())));
@@ -98,8 +93,8 @@ public class ItemsTabController {
     }
 
     @FXML
-    private void remove_btn_click(ActionEvent e) throws Exception {
-        // обработчик нажатия на кноку remove
+    private void remove_btn_click(ActionEvent ignoredE) {
+        // обработчик нажатия на кнопку remove
         // если выбрано поле
         if (selected_index >= 0) {
             items.remove(selected_index);

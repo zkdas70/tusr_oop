@@ -21,11 +21,6 @@ class CustomerForList extends Customer{
 }
 
 public class CustomersTabController {
-    // кнопки
-    @FXML
-    private Button add_btn;
-    @FXML
-    private Button remove_btn;
     // текстовые поля
     @FXML
     private TextField id_field;
@@ -35,9 +30,9 @@ public class CustomersTabController {
     private TextArea address_field;
     // ListView
     @FXML
-    private ListView<CustomerForList> сustomers_listView;
+    private ListView<CustomerForList> customers_listView;
 
-    private  int selected_index = -1;// -1 техническое значени (выбрано нечего)
+    private  int selected_index = -1;// -1 техническое значение (выбрано нечего)
 
     private ObservableList<CustomerForList> items; // список элементов в ListView
 
@@ -54,16 +49,16 @@ public class CustomersTabController {
 
         // Инициализация списка ListView
         items = FXCollections.observableArrayList();
-        сustomers_listView.setItems(items);
+        customers_listView.setItems(items);
 
         // Обработчик клика
-        сustomers_listView.setOnMouseClicked(event -> {
-            MultipleSelectionModel<CustomerForList> SelectionModel = сustomers_listView.getSelectionModel();
+        customers_listView.setOnMouseClicked(event -> {
+            MultipleSelectionModel<CustomerForList> SelectionModel = customers_listView.getSelectionModel();
 
-            // получение выделеного элемента (как обьекта)
+            // получение выделенного элемента (как объекта)
             CustomerForList selectedItem = SelectionModel.getSelectedItem();
             if (selectedItem != null) {
-                // получение id выделеного элемента
+                // получение id выделенного элемента
                 selected_index = SelectionModel.getSelectedIndex();
 
                 // задаем значения полям
@@ -76,8 +71,8 @@ public class CustomersTabController {
 
 
     @FXML
-    private void add_btn_click(ActionEvent e) throws Exception {
-        // обработчик нажатия на кноку add
+    private void add_btn_click(ActionEvent ignoredE) throws Exception {
+        // обработчик нажатия на кнопку add
         DataRequiredValidator validator = new DataRequiredValidator();
 
         // валидация полей
@@ -85,7 +80,7 @@ public class CustomersTabController {
         validator.validateField(ful_name_field);
         validator.validateField(address_field);
 
-        // если все поля прошли валедацию
+        // если все поля прошли валидацию
         if (validator.IsNotErrors()) {
             items.add(new CustomerForList(ful_name_field.getText(), address_field.getText()));
 
@@ -94,8 +89,8 @@ public class CustomersTabController {
     }
 
     @FXML
-    private void remove_btn_click(ActionEvent e) throws Exception {
-        // обработчик нажатия на кноку remove
+    private void remove_btn_click(ActionEvent ignoredE) {
+        // обработчик нажатия на кнопку remove
         if (selected_index >= 0) {
             items.remove(selected_index);
             clearField();

@@ -7,10 +7,10 @@ import com.zkdas.oop.service.ValueValidator;
 
 public class Item {
     /// <summary>
-    ///  класс модель дагнных Item
+    ///  класс модель данных Item
     /// </summary>
-    private static IdGenerator _idGenerator = new IdGenerator();
-    private int _id;
+    private static final IdGenerator _idGenerator = new IdGenerator();
+    private final int _id;
     protected LimitedSting _name;
     private LimitedSting _info;
     private LimitedFloat _cost;
@@ -18,12 +18,9 @@ public class Item {
     public Item(String name, String info, float cost) throws Exception {
         _id = _idGenerator.get_next_id();
 
-        ValueValidator.AssertStringOnLength(name, 200, "name");
-        ValueValidator.AssertStringOnLength(info, 1000, "info");
-
-        _name = new LimitedSting(200, name);
-        _info = new LimitedSting(1000, info);
-        _cost = new LimitedFloat(0, 100_000, cost);
+        setInfo(info);
+        setName(name);
+        setCost(cost);
     }
 
     public int getId() {
@@ -34,15 +31,20 @@ public class Item {
         return _name.get_data();
     }
     public void setName(String name) throws Exception {
-        _name.setData(name);
+        ValueValidator.AssertStringOnLength(name, 200, "name");
+
+        _name = new LimitedSting(200, name);
     }
+
 
     public String getInfo() {
         return _info.get_data();
     }
 
     public void setInfo(String info) throws Exception {
-        _info.setData(info);
+        ValueValidator.AssertStringOnLength(info, 1000, "info");
+
+        _info = new LimitedSting(1000, info);
     }
 
     public float getCost() {
@@ -50,6 +52,6 @@ public class Item {
     }
 
     public void setCost(float cost) throws Exception {
-        _cost.set_value(cost);
+        _cost = new LimitedFloat(0, 100_000, cost);
     }
 }
