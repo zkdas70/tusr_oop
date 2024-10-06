@@ -102,9 +102,9 @@ public class ItemsTabController {
 
         // валидация полей
         //validator.validateField(id_field);
-        validator.validateNumberField(cost_field);
-        validator.validateField(name_field);
-        validator.validateField(description_field);
+        validator.validateNumberField(cost_field, 0, 100_000);
+        validator.validateField(name_field, 200);
+        validator.validateField(description_field, 1000);
 
         // если все поля прошли валидацию
         if (validator.IsNotErrors()) {

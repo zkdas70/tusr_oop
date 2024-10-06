@@ -1,0 +1,83 @@
+@startuml
+
+class CustomerForList {
++ <<Create>> CustomerForList(String,String)
++ <<Create>> CustomerForList(T)
++ String toString()
+}
+
+class IdGenerator {
+- int _lastId
++ <<Create>> IdGenerator()
++ int get_next_id()
+}
+
+
+class ItemForList {
++ <<Create>> ItemForList(String,String,float)
++ <<Create>> ItemForList(T)
++ String toString()
+}
+
+
+class LimitedFloat {
+- int _min
+- int _max
+- float _vale
++ <<Create>> LimitedFloat(int,int,float)
+- void _check_vale(float)
++ void set_value(float)
++ float get_value()
+}
+
+
+class LimitedSting {
+- int _length
+- String _data
++ <<Create>> LimitedSting(int,String)
+- void _check_length(String)
++ void setData(String)
++ String get_data()
+}
+
+class Item {
+- {static} IdGenerator _idGenerator
+- int _id
+# LimitedSting _name
+- LimitedSting _info
+- LimitedFloat _cost
++ <<Create>> Item(String,String,float)
++ int getId()
++ String getName()
++ void setName(String)
++ String getInfo()
++ void setInfo(String)
++ float getCost()
++ void setCost(float)
+}
+
+
+class Customer {
+- {static} IdGenerator _idGenerator
+- int _id
+# LimitedSting _fulname
+- LimitedSting _address
++ <<Create>> Customer(String,String)
++ int getId()
++ String getFulname()
++ String getAddress()
++ void setFulname(String)
++ void setAddress(String)
+}
+
+
+Customer <|-- CustomerForList
+Item <|-- ItemForList
+
+IdGenerator "1"<--*"1" Customer
+IdGenerator "1"<--*"1" Item
+
+LimitedSting "2"<--*"1" Customer
+LimitedSting "2"<--*"1" Item
+LimitedFloat "1"<--*"1" Item
+@enduml

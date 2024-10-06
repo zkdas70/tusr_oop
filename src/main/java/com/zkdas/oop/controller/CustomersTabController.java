@@ -98,8 +98,8 @@ public class CustomersTabController {
 
         // валидация полей (не должны быть пустыми)
         //validator.validateField(id_field);
-        validator.validateField(ful_name_field);
-        validator.validateField(address_field);
+        validator.validateField(ful_name_field, 200);
+        validator.validateField(address_field, 500);
 
         // если все поля прошли валидацию
         if (validator.IsNotErrors()) {

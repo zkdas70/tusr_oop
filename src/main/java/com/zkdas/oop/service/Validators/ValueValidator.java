@@ -9,4 +9,8 @@ public class ValueValidator {
             throw new Exception(propertyName + " должна быть короче " + maxLength + "символов.");
         }
     }
+
+    public static void AssertStringOnLength(String value, int maxLength) throws Exception {
+        AssertStringOnLength(value, maxLength, null);
+    }
 }
