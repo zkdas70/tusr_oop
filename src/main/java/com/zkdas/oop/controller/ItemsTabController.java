@@ -1,17 +1,24 @@
 package com.zkdas.oop.controller;
 
+import com.zkdas.oop.model.Customer;
 import com.zkdas.oop.model.Item;
-import com.zkdas.oop.service.DataRequiredValidator;
+import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
+import java.util.ArrayList;
+
 
 class ItemForList extends Item {
     public ItemForList(String name, String info, float cost) throws Exception {
         super(name, info, cost);
+    }
+
+    public <T extends Item> ItemForList(T item) throws Exception {
+        this(item.getName(), item.getInfo(), item.getCost());
     }
 
     @Override
@@ -34,11 +41,11 @@ public class ItemsTabController {
     @FXML
     private ListView<ItemForList> items_listView;
 
-    private  int selected_index = -1; // -1 техническое значение (выбрано нечего)
+    private int selected_index = -1; // -1 техническое значение (выбрано нечего)
 
     private ObservableList<ItemForList> items; // список элементов в ListView
 
-    private void clearFields(){
+    private void clearFields() {
         id_field.setText("");
         cost_field.setText("");
         name_field.setText("");
@@ -72,6 +79,21 @@ public class ItemsTabController {
         });
     }
 
+    public ArrayList<ItemForList> getItems() {
+        return new ArrayList<>(items);
+    }
+
+    public <T extends Item> void setItems(ArrayList<T> items) throws Exception {
+        this.items.clear();
+
+        for (T item : items) {
+            this.items.add(new ItemForList(item));
+        }
+    }
+
+    public <T extends Item> void addItem(T item) throws Exception {
+        items.add(new ItemForList(item));
+    }
 
     @FXML
     private void add_btn_click(ActionEvent ignoredE) throws Exception {

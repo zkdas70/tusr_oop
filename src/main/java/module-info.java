@@ -1,6 +1,7 @@
 module com.zkdas.oop {
     requires javafx.controls;
     requires javafx.fxml;
+    requires net.datafaker;
 
 
     opens com.zkdas.oop to javafx.fxml;

@@ -3,7 +3,7 @@ package com.zkdas.oop.model;
 import com.zkdas.oop.service.IdGenerator;
 import com.zkdas.oop.service.limitedStrinds.LimitedFloat;
 import com.zkdas.oop.service.limitedStrinds.LimitedSting;
-import com.zkdas.oop.service.ValueValidator;
+import com.zkdas.oop.service.Validators.ValueValidator;
 
 public class Item {
     /// <summary>

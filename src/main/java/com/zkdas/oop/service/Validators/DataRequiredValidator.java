@@ -1,11 +1,13 @@
-package com.zkdas.oop.service;
+package com.zkdas.oop.service.Validators;
 
 import javafx.scene.control.TextInputControl;
 
+/// класс считающий сработавшие валидаторы
 public class DataRequiredValidator {
     private int _errors_counter = 0;
 
     public <T extends TextInputControl> void validateField(T field) {
+        /// проведет валидацию поля и окрасит его в красный если валидация провалена
         try {
             if (field.getText().isEmpty()) {
                 throw new Exception("поле" + field.getId() + "пустое");
@@ -18,6 +20,7 @@ public class DataRequiredValidator {
     }
 
     public <T extends TextInputControl> void validateNumberField(T field) {
+        /// проведет валидацию поля и окрасит его в красный если валидация провалена
         try {
             if (field.getText().isEmpty()) {
                 throw new Exception("поле" + field.getId() + "пустое");
@@ -31,6 +34,7 @@ public class DataRequiredValidator {
     }
 
     public boolean IsNotErrors() {
+        /// вернет true если все валидаторы не сработали
         return _errors_counter == 0;
     }
 }

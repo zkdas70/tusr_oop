@@ -2,7 +2,7 @@ package com.zkdas.oop.model;
 
 import com.zkdas.oop.service.IdGenerator;
 import com.zkdas.oop.service.limitedStrinds.LimitedSting;
-import com.zkdas.oop.service.ValueValidator;
+import com.zkdas.oop.service.Validators.ValueValidator;
 /// <summary>
 ///  класс модель данных Customer
 /// </summary>
@@ -20,6 +20,10 @@ public class Customer
 
         setFulname(fulname);
         setAddress(address);
+    }
+
+    public <T extends Customer> Customer(T customer) throws Exception {
+        this(customer.getFulname(), customer.getAddress());
     }
 
     public int getId(){

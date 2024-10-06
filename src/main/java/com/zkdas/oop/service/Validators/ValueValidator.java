@@ -1,4 +1,4 @@
-package com.zkdas.oop.service;
+package com.zkdas.oop.service.Validators;
 
 /// <summary>
 ///  валидатор проверки длины поля

@@ -1,17 +1,24 @@
 package com.zkdas.oop.controller;
 
 import com.zkdas.oop.model.Customer;
-import com.zkdas.oop.service.DataRequiredValidator;
+import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 
-class CustomerForList extends Customer{
+
+class CustomerForList extends Customer {
     public CustomerForList(String fulname, String address) throws Exception {
         super(fulname, address);
+    }
+
+    public <T extends Customer> CustomerForList(T customer) throws Exception {
+        this(customer.getFulname(), customer.getAddress());
     }
 
     @Override
@@ -32,12 +39,11 @@ public class CustomersTabController {
     @FXML
     private ListView<CustomerForList> customers_listView;
 
-    private  int selected_index = -1;// -1 техническое значение (выбрано нечего)
+    private int selected_index = -1;// -1 техническое значение (выбрано нечего)
 
     private ObservableList<CustomerForList> items; // список элементов в ListView
 
-
-    private void clearField(){
+    private void clearField() {
         id_field.setText("");
         ful_name_field.setText("");
         address_field.setText("");
@@ -69,13 +75,28 @@ public class CustomersTabController {
         });
     }
 
+    public ArrayList<CustomerForList> getCustomers(){
+        return new ArrayList<>(this.items);
+    }
+
+    public <T extends Customer> void setCustomers(ArrayList<T> customers) throws Exception {
+        items.clear();
+
+        for (T customer : customers) {
+            items.add(new CustomerForList(customer));
+        }
+    }
+
+    public <T extends Customer> void addCustomer(T customer) throws Exception {
+        items.add(new CustomerForList(customer));
+    }
 
     @FXML
     private void add_btn_click(ActionEvent ignoredE) throws Exception {
         // обработчик нажатия на кнопку add
         DataRequiredValidator validator = new DataRequiredValidator();
 
-        // валидация полей
+        // валидация полей (не должны быть пустыми)
         //validator.validateField(id_field);
         validator.validateField(ful_name_field);
         validator.validateField(address_field);
