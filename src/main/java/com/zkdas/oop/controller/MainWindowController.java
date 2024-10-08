@@ -11,6 +11,9 @@ import javafx.scene.control.Tab;
 import java.io.*;
 
 public class MainWindowController {
+    /**
+     * Контролер Главного окна
+     */
     @FXML
     private Tab containerTab1;
     @FXML

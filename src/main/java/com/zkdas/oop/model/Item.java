@@ -6,15 +6,21 @@ import com.zkdas.oop.service.limitedStrinds.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
 
 public class Item {
-    /// <summary>
-    ///  класс модель данных Item
-    /// </summary>
+    /**
+     * Класс модель данных Item
+     */
     private static final IdGenerator _idGenerator = new IdGenerator();
-    private final int _id;
-    protected LimitedSting _name;
-    private LimitedSting _info;
-    private LimitedFloat _cost;
+    private final int _id; // целочисленное readonly-поле, хранящее уникальный номер товара.
+    protected final LimitedSting _name = new LimitedSting(200); // строковое поле с названием товара, до 200 символов.
+    private final LimitedSting _info = new LimitedSting(1_000); // строковое поле с описанием товара, до 1 000 символов.
+    private final LimitedFloat _cost = new LimitedFloat(0, 100_000); // вещественное поле со стоимостью товара, от 0 до 100 000
 
+    /**
+     * конструктор Item
+     * @param name String названием товара, до 200 символов
+     * @param info String описанием товара, до 1 000 символов
+     * @param cost float стоимость товара, от 0 до 100 000
+     */
     public Item(String name, String info, float cost) throws Exception {
         _id = _idGenerator.get_next_id();
 
@@ -27,31 +33,32 @@ public class Item {
         return _id;
     }
 
-    public String getName(){
-        return _name.get_data();
+    public String getName() {
+        return _name.toString();
     }
-    public void setName(String name) throws Exception {
-        ValueValidator.AssertStringOnLength(name, 200, "name");
 
-        _name = new LimitedSting(200, name);
+    public void setName(String name) throws Exception {
+        ValueValidator.AssertStringOnLength(name, _name.getLength(), "name");
+
+        _name.setData(name);
     }
 
 
     public String getInfo() {
-        return _info.get_data();
+        return _info.toString();
     }
 
     public void setInfo(String info) throws Exception {
-        ValueValidator.AssertStringOnLength(info, 1000, "info");
+        ValueValidator.AssertStringOnLength(info, _info.getLength(), "info");
 
-        _info = new LimitedSting(1000, info);
+        _info.setData(info);
     }
 
     public float getCost() {
-        return _cost.get_value();
+        return _cost.getValue();
     }
 
     public void setCost(float cost) throws Exception {
-        _cost = new LimitedFloat(0, 100_000, cost);
+        _cost.setValue(cost);
     }
 }
