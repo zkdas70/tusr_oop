@@ -1,6 +1,5 @@
 package com.zkdas.oop.controller;
 
-import com.zkdas.oop.model.Customer;
 import com.zkdas.oop.model.Item;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.event.ActionEvent;
@@ -23,7 +22,7 @@ class ItemForList extends Item {
 
     @Override
     public String toString() {
-        return _name.get_data(); // Будет отображаться в ListView
+        return _name.toString(); // Будет отображаться в ListView
     }
 }
 

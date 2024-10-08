@@ -24,7 +24,8 @@ public class LimitedSting {
         _check_length(data);
     }
 
-    public String get_data() {
+    @Override
+    public String toString() {
         return _data;
     }
 }

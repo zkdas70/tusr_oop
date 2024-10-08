@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 
 class CustomerForList extends Customer {
@@ -23,7 +22,7 @@ class CustomerForList extends Customer {
 
     @Override
     public String toString() {
-        return _fulname.get_data(); // Будет отображаться в ListView
+        return _fulname.toString(); // Будет отображаться в ListView
     }
 }
 

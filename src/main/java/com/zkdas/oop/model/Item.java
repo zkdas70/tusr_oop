@@ -6,9 +6,7 @@ import com.zkdas.oop.service.limitedStrinds.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
 
 public class Item {
-    /// <summary>
     ///  класс модель данных Item
-    /// </summary>
     private static final IdGenerator _idGenerator = new IdGenerator();
     private final int _id;
     protected LimitedSting _name;
@@ -28,7 +26,7 @@ public class Item {
     }
 
     public String getName(){
-        return _name.get_data();
+        return _name.toString();
     }
     public void setName(String name) throws Exception {
         ValueValidator.AssertStringOnLength(name, 200, "name");
@@ -38,7 +36,7 @@ public class Item {
 
 
     public String getInfo() {
-        return _info.get_data();
+        return _info.toString();
     }
 
     public void setInfo(String info) throws Exception {

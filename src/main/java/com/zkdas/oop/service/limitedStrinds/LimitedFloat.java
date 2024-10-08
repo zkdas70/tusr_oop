@@ -29,4 +29,9 @@ public class LimitedFloat {
     public float get_value() {
         return _vale;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(_vale);
+    }
 }

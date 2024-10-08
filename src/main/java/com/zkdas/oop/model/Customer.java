@@ -30,10 +30,10 @@ public class Customer
         return _id;
     }
     public String getFulname(){
-        return _fulname.get_data();
+        return _fulname.toString();
     }
     public String getAddress(){
-        return _address.get_data();
+        return _address.toString();
     }
     public void setFulname(String fulname) throws Exception {
         ValueValidator.AssertStringOnLength(fulname, 200, "name");
