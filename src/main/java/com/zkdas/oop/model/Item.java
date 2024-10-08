@@ -14,19 +14,23 @@ public class Item {
     protected final LimitedSting _name = new LimitedSting(200); // строковое поле с названием товара, до 200 символов.
     private final LimitedSting _info = new LimitedSting(1_000); // строковое поле с описанием товара, до 1 000 символов.
     private final LimitedFloat _cost = new LimitedFloat(0, 100_000); // вещественное поле со стоимостью товара, от 0 до 100 000
+    private Category _category;
 
     /**
      * конструктор Item
      * @param name String названием товара, до 200 символов
      * @param info String описанием товара, до 1 000 символов
      * @param cost float стоимость товара, от 0 до 100 000
+     * @param category енум Category
      */
-    public Item(String name, String info, float cost) throws Exception {
+    public Item(String name, String info, float cost, Category category) throws Exception {
         _id = _idGenerator.get_next_id();
 
         setInfo(info);
         setName(name);
         setCost(cost);
+
+        _category = category;
     }
 
     public int getId() {
@@ -60,5 +64,12 @@ public class Item {
 
     public void setCost(float cost) throws Exception {
         _cost.setValue(cost);
+    }
+
+    public Category getCategory() {
+        return _category;
+    }
+    public void setCategory(Category category) throws Exception {
+        _category = category;
     }
 }

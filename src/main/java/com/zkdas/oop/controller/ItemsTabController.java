@@ -1,5 +1,6 @@
 package com.zkdas.oop.controller;
 
+import com.zkdas.oop.model.Category;
 import com.zkdas.oop.model.Item;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.event.ActionEvent;
@@ -15,12 +16,12 @@ class ItemForList extends Item {
     /**
      * Класс Item для отображения в списке
      */
-    public ItemForList(String name, String info, float cost) throws Exception {
-        super(name, info, cost);
+    public ItemForList(String name, String info, float cost, Category category) throws Exception {
+        super(name, info, cost, category);
     }
 
     public <T extends Item> ItemForList(T item) throws Exception {
-        this(item.getName(), item.getInfo(), item.getCost());
+        this(item.getName(), item.getInfo(), item.getCost(), item.getCategory());
     }
 
     @Override
@@ -33,6 +34,8 @@ public class ItemsTabController {
     /**
      * Контролер виджета ItemsTab
      */
+    @FXML
+    private ChoiceBox<Category> Category_field;
     // текстовые поля
     @FXML
     private TextField id_field;
@@ -58,6 +61,11 @@ public class ItemsTabController {
     }
 
     public void initialize() {
+        // устанавливаю выбор значений
+        Category_field.getItems().addAll(Category.values());
+
+        Category_field.setValue(Category.NONE);
+
         // запрет на изменение id_field
         id_field.setEditable(false);
 
@@ -80,20 +88,14 @@ public class ItemsTabController {
                 cost_field.setText(String.valueOf(selectedItem.getCost()));
                 name_field.setText(selectedItem.getName());
                 description_field.setText(selectedItem.getInfo());
+
+                Category_field.setValue(selectedItem.getCategory());
             }
         });
     }
 
     public ArrayList<ItemForList> getItems() {
         return new ArrayList<>(items);
-    }
-
-    public <T extends Item> void setItems(ArrayList<T> items) throws Exception {
-        this.items.clear();
-
-        for (T item : items) {
-            this.items.add(new ItemForList(item));
-        }
     }
 
     public <T extends Item> void addItem(T item) throws Exception {
@@ -114,7 +116,7 @@ public class ItemsTabController {
         // если все поля прошли валидацию
         if (validator.IsNotErrors()) {
             items.add(new ItemForList(name_field.getText(), description_field.getText(),
-                    Float.parseFloat(cost_field.getText())));
+                    Float.parseFloat(cost_field.getText()), Category_field.getValue()));
             clearFields();
         }
     }

@@ -1,5 +1,6 @@
 package com.zkdas.oop.service.dataFactory;
 
+import com.zkdas.oop.model.Category;
 import com.zkdas.oop.model.Item;
 import net.datafaker.Faker;
 
@@ -20,7 +21,8 @@ public class ItemFactory {
 
         float productPrice = Float.parseFloat(faker.commerce().price().replace(',', '.'));
 
+        Category category = Category.NONE;
         // Вывод информации о товаре
-        return new Item(productName, productDescription, productPrice);
+        return new Item(productName, productDescription, productPrice, category);
     }
 }

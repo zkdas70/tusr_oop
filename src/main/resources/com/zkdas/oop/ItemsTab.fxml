@@ -44,8 +44,8 @@
                             <Label fx:id="cost_fild" text="Cost" GridPane.rowIndex="1" />
                             <TextField fx:id="id_field" accessibleRole="TEXT" GridPane.columnIndex="1" />
                             <TextField fx:id="cost_field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                     <ChoiceBox maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                     <Label text="Category" GridPane.rowIndex="2" />
+                     <ChoiceBox fx:id="Category_field" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     <Label fx:id="Category" text="Category" GridPane.rowIndex="2" />
                         </children>
                     </GridPane>
                <Label text="Name" />
