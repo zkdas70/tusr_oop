@@ -6,6 +6,9 @@ import net.datafaker.Faker;
 import java.util.Locale;
 
 public class ItemFactory {
+    /**
+     * Сгенерирует новый подходящий для тестов Item
+     */
     public static Item createItem() throws Exception {
         // * Создаст объект класса Item со случайными (тестовыми данными) данными
 

@@ -1,17 +1,22 @@
 package com.zkdas.oop.service.limitedStrinds;
 
-/// <summary>
-///  класс лимитированой по длине Float числа
-/// </summary>
 public class LimitedFloat {
-    private int _min;
-    private int _max;
+    /**
+     * Класс лимитированной по длине Float числа
+     */
+
+    private final float _min;
+    private final float _max;
     private float _vale;
 
-    public LimitedFloat(int min, int max, float vale) throws Exception {
+    /**
+     * конструктор LimitedFloat
+     * @param min минимальное значение
+     * @param max максимальное значение
+     */
+    public LimitedFloat(float min, float max) throws Exception {
         _min = min;
         _max = max;
-        _check_vale(vale);
     }
 
     private void _check_vale(float vale) throws Exception {
@@ -22,11 +27,19 @@ public class LimitedFloat {
         _vale = vale;
     }
 
-    public void set_value(float vale) throws Exception {
+    /**
+     * Установит новое значение
+     * @param vale новое значение
+     */
+    public void setValue(float vale) throws Exception {
         _check_vale(vale);
     }
 
-    public float get_value() {
+    /**
+     * Вернет записанное значение
+     * @return float число
+     */
+    public float getValue() {
         return _vale;
     }
 

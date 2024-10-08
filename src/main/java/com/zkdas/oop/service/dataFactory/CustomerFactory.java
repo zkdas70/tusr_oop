@@ -6,6 +6,9 @@ import net.datafaker.Faker;
 import java.util.Locale;
 
 public class CustomerFactory {
+    /**
+     * Сгенерирует новый подходящего для тестов Customer
+     */
     public static Customer createCustomer() throws Exception {
         // * Создаст объект класса Customer со случайными (тестовыми данными) данными
         Faker faker = new Faker(new Locale("ru"));

@@ -8,10 +8,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class main extends Application {
+    /**
+     * Метод отвечающий за загрузку и старт GUI
+     */
     @Override
     public void start(Stage stage) throws IOException {
-        /// Метод отвечающий за загрузку и старт GUI
-
         // заррузка шаблонов
         //FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("ItemsTab.fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(main.class.getResource("/com/zkdas/oop/mainWindow.fxml"));
@@ -20,7 +21,7 @@ public class main extends Application {
         Scene scene = new Scene(fxmlLoader.load());
 
         // присваеваем имя окну
-        stage.setTitle("ItemsTab!");
+        stage.setTitle("OOP Business!");
         // присваеваем сцену окну
         stage.setScene(scene);
 

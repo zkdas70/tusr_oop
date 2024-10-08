@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 
 class ItemForList extends Item {
+    /**
+     * Класс Item для отображения в списке
+     */
     public ItemForList(String name, String info, float cost) throws Exception {
         super(name, info, cost);
     }
@@ -27,6 +30,9 @@ class ItemForList extends Item {
 }
 
 public class ItemsTabController {
+    /**
+     * Контролер виджета ItemsTab
+     */
     // текстовые поля
     @FXML
     private TextField id_field;

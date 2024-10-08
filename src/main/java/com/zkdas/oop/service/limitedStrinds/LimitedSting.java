@@ -1,13 +1,18 @@
 package com.zkdas.oop.service.limitedStrinds;
 
-/// <summary>
-///  класс лимитированой по длине строки
-/// </summary>
+
 public class LimitedSting {
+    /**
+     * Класс лимитированной по длине строки
+     */
     private int _length;
     private String _data;
 
-    public LimitedSting(int length, String data) throws Exception {
+    /**
+     * конструктор LimitedSting
+     * @param length максимальная длина строки
+     */
+    public LimitedSting(int length) throws Exception {
         _length = length;
         _check_length(data);
     }
@@ -20,8 +25,20 @@ public class LimitedSting {
         _data = data;
     }
 
+    /**
+     * Задаст новое значение строки
+     * @param data строка, что должна быть задана
+     */
     public void setData(String data) throws Exception {
         _check_length(data);
+    }
+
+    /**
+     * Вернет максимально допустимую длину
+     * @return int максимальная длина
+     */
+    public int getLength() {
+        return _length;
     }
 
     @Override

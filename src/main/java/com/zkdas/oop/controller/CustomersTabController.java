@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 
 class CustomerForList extends Customer {
+    /**
+     * Класс Customer для отображения в списке
+     */
     public CustomerForList(String fulname, String address) throws Exception {
         super(fulname, address);
     }
@@ -27,6 +30,9 @@ class CustomerForList extends Customer {
 }
 
 public class CustomersTabController {
+    /**
+     * Контролер виджета CustomersTab
+     */
     // текстовые поля
     @FXML
     private TextField id_field;
