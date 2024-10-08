@@ -1,5 +1,6 @@
 package com.zkdas.oop.service.dataFactory;
 
+import com.zkdas.oop.model.Address;
 import com.zkdas.oop.model.Customer;
 import net.datafaker.Faker;
 
@@ -15,7 +16,15 @@ public class CustomerFactory {
 
         // Генерация случайного человека
         String fulname = faker.name().fullName();
-        String address = faker.address().fullAddress();
+
+        Address address = new Address();
+        address.setPostIndex(Integer.parseInt(faker.address().postcode()));
+        address.setCountry(faker.address().country());
+        address.setCity(faker.address().city());
+        address.setStreet(faker.address().streetName());
+        address.setBuilding(faker.address().buildingNumber());
+        address.setApartment(faker.address().streetAddressNumber());
+
 
         return new Customer(fulname, address);
     }

@@ -1,13 +1,18 @@
 package com.zkdas.oop.controller;
 
+import com.zkdas.oop.model.Address;
 import com.zkdas.oop.model.Customer;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -15,7 +20,7 @@ class CustomerForList extends Customer {
     /**
      * Класс Customer для отображения в списке
      */
-    public CustomerForList(String fulname, String address) throws Exception {
+    public CustomerForList(String fulname, Address address) throws Exception {
         super(fulname, address);
     }
 
@@ -33,13 +38,15 @@ public class CustomersTabController {
     /**
      * Контролер виджета CustomersTab
      */
+    @FXML
+    private VBox interfaceContainer;
+
+    private AddressController addressController;
     // текстовые поля
     @FXML
     private TextField id_field;
     @FXML
     private TextField ful_name_field;
-    @FXML
-    private TextArea address_field;
     // ListView
     @FXML
     private ListView<CustomerForList> customers_listView;
@@ -47,16 +54,23 @@ public class CustomersTabController {
     private int selected_index = -1;// -1 техническое значение (выбрано нечего)
 
     private ObservableList<CustomerForList> items; // список элементов в ListView
+    private Address address;
 
     private void clearField() {
         id_field.setText("");
         ful_name_field.setText("");
-        address_field.setText("");
     }
 
-    public void initialize() {
+    public void initialize() throws IOException {
         // запрет на изменение id_field
         id_field.setEditable(false);
+
+        // указания пути к fxml файлу
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/AddressControl.fxml"));
+        Parent subview = loader.load();// загрузка данных из файла
+        addressController = loader.getController(); // присвоение контролера
+        // вставка subview
+        interfaceContainer.getChildren().add(subview);
 
         // Инициализация списка ListView
         items = FXCollections.observableArrayList();
@@ -75,7 +89,7 @@ public class CustomersTabController {
                 // задаем значения полям
                 id_field.setText(String.valueOf(selectedItem.getId()));
                 ful_name_field.setText(selectedItem.getFulname());
-                address_field.setText(selectedItem.getAddress());
+                addressController.SetAddress(selectedItem.getAddress());
             }
         });
     }
@@ -104,11 +118,12 @@ public class CustomersTabController {
         // валидация полей (не должны быть пустыми)
         //validator.validateField(id_field);
         validator.validateField(ful_name_field, 200);
-        validator.validateField(address_field, 500);
+        // валидация полей Адреса
+        Address address = addressController.getAddressFromFields(validator);
 
         // если все поля прошли валидацию
         if (validator.IsNotErrors()) {
-            items.add(new CustomerForList(ful_name_field.getText(), address_field.getText()));
+            items.add(new CustomerForList(ful_name_field.getText(), address));
 
             clearField();
         }

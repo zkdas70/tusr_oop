@@ -14,7 +14,6 @@ public class LimitedSting {
      */
     public LimitedSting(int length) throws Exception {
         _length = length;
-        _check_length(data);
     }
 
     private void _check_length(String data) throws Exception {
