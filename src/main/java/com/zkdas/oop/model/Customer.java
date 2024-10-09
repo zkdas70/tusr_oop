@@ -23,7 +23,7 @@ public class Customer
         _id = _idGenerator.get_next_id();
 
         setFulname(fulname);
-        _address = address;
+        _address = new Address(address); // созданная копия это уже не агрегация, а композиция
     }
 
     /**

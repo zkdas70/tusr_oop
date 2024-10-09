@@ -1,7 +1,9 @@
 package com.zkdas.oop.controller;
 
+import com.zkdas.oop.controller.modelForController.ItemForList;
 import com.zkdas.oop.model.Category;
 import com.zkdas.oop.model.Item;
+import com.zkdas.oop.model.Store;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,24 +13,6 @@ import javafx.collections.FXCollections;
 
 import java.util.ArrayList;
 
-
-class ItemForList extends Item {
-    /**
-     * Класс Item для отображения в списке
-     */
-    public ItemForList(String name, String info, float cost, Category category) throws Exception {
-        super(name, info, cost, category);
-    }
-
-    public <T extends Item> ItemForList(T item) throws Exception {
-        this(item.getName(), item.getInfo(), item.getCost(), item.getCategory());
-    }
-
-    @Override
-    public String toString() {
-        return _name.toString(); // Будет отображаться в ListView
-    }
-}
 
 public class ItemsTabController {
     /**
@@ -64,13 +48,15 @@ public class ItemsTabController {
         // устанавливаю выбор значений
         Category_field.getItems().addAll(Category.values());
 
+        // устанавливает выбор по умолчанию
         Category_field.setValue(Category.NONE);
 
         // запрет на изменение id_field
         id_field.setEditable(false);
 
         // Инициализация списка ListView
-        items = FXCollections.observableArrayList();
+        Store store = new Store();
+        items = store.getItems();
         items_listView.setItems(items);
 
         // Обработчик клика
@@ -130,5 +116,7 @@ public class ItemsTabController {
             clearFields();
             selected_index = -1;
         }
+//        Store store = new Store();
+//        store.getCustomers().clear();
     }
 }

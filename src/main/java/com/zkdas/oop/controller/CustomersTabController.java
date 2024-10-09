@@ -1,7 +1,9 @@
 package com.zkdas.oop.controller;
 
+import com.zkdas.oop.controller.modelForController.CustomerForList;
 import com.zkdas.oop.model.Address;
 import com.zkdas.oop.model.Customer;
+import com.zkdas.oop.model.Store;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,26 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-
-class CustomerForList extends Customer {
-    /**
-     * Класс Customer для отображения в списке
-     */
-    public CustomerForList(String fulname, Address address) throws Exception {
-        super(fulname, address);
-    }
-
-    public <T extends Customer> CustomerForList(T customer) throws Exception {
-        this(customer.getFulname(), customer.getAddress());
-    }
-
-    @Override
-    public String toString() {
-        return _fulname.toString(); // Будет отображаться в ListView
-    }
-}
 
 public class CustomersTabController {
     /**
@@ -73,7 +56,8 @@ public class CustomersTabController {
         interfaceContainer.getChildren().add(subview);
 
         // Инициализация списка ListView
-        items = FXCollections.observableArrayList();
+        Store store = new Store();
+        items = store.getCustomers();
         customers_listView.setItems(items);
 
         // Обработчик клика
@@ -94,17 +78,6 @@ public class CustomersTabController {
         });
     }
 
-    public ArrayList<CustomerForList> getCustomers(){
-        return new ArrayList<>(this.items);
-    }
-
-    public <T extends Customer> void setCustomers(ArrayList<T> customers) throws Exception {
-        items.clear();
-
-        for (T customer : customers) {
-            items.add(new CustomerForList(customer));
-        }
-    }
 
     public <T extends Customer> void addCustomer(T customer) throws Exception {
         items.add(new CustomerForList(customer));

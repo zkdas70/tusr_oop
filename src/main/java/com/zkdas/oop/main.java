@@ -1,5 +1,6 @@
 package com.zkdas.oop;
 
+import com.zkdas.oop.model.Store;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,5 +34,7 @@ public class main extends Application {
 
     public static void main(String[] args) {
         launch(); // закпускает Application.launch() (сделает тех. загрузку и запустит .start() )
+
+
     }
 }

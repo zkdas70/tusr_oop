@@ -24,7 +24,6 @@ public class PostIndex {
         if (100_000 > postIndex || postIndex >= 1_000_000) {
             throw new Exception("Post index out of bounds");
         }
-        System.out.println(postIndex);
         this.postIndex = postIndex;
     }
     public int getPostIndex() {
@@ -34,4 +33,5 @@ public class PostIndex {
     public String toString() {
         return String.valueOf(postIndex);
     }
+
 }

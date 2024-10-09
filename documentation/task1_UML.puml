@@ -70,6 +70,9 @@ class Customer {
 + void setAddress(String)
 }
 
+class  ValueValidator{
++ {static} AssertStringOnLength(String value, int maxLength, String propertyName)
+}
 
 Customer <|-- CustomerForList
 Item <|-- ItemForList

@@ -17,7 +17,9 @@ public class CustomerFactory {
         // Генерация случайного человека
         String fulname = faker.name().fullName();
 
+        // генерация адреса
         Address address = new Address();
+
         address.setPostIndex(Integer.parseInt(faker.address().postcode()));
         address.setCountry(faker.address().country());
         address.setCity(faker.address().city());

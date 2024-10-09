@@ -35,58 +35,85 @@ public class Address {
     /**
      * Конструктор по умолчанию
      */
-    public Address() throws Exception {};
+    public Address() throws Exception {
+    }
+
+    ;
+
+    /**
+     * Копирующей конструктор
+     * @param address Класс унаследованный от ад Address
+     */
+    public <T extends Address> Address(T address) throws Exception {
+        this(address.getPostIndex(), address.getCountry(), address.getCity(),
+                address.getStreet(), address.getBuilding(), address.getApartment());
+    }
 
     public void setPostIndex(int index) throws Exception {
         _index.setPostIndex(index);
     }
+
     public void setCountry(String country) throws Exception {
         _country.setData(country);
     }
+
     public void setCity(String city) throws Exception {
         _city.setData(city);
     }
+
     public void setStreet(String street) throws Exception {
         _street.setData(street);
     }
+
     public void setBuilding(String building) throws Exception {
         _building.setData(building);
     }
+
     public void setApartment(String apartment) throws Exception {
         _apartment.setData(apartment);
     }
+
     public int getPostIndex() {
         return _index.getPostIndex();
     }
+
     public String getCountry() {
         return _country.toString();
     }
+
     public String getCity() {
         return _city.toString();
     }
+
     public String getStreet() {
         return _street.toString();
     }
+
     public String getBuilding() {
         return _building.toString();
     }
+
     public String getApartment() {
         return _apartment.toString();
     }
 
-    public int getCountryLen(){
+    public int getCountryLen() {
         return _country.getLength();
     }
-    public int getCityLen(){
+
+    public int getCityLen() {
         return _city.getLength();
     }
-    public int getStreetLen(){
+
+    public int getStreetLen() {
         return _street.getLength();
     }
-    public int getBuildingLen(){
+
+    public int getBuildingLen() {
         return _building.getLength();
     }
-    public int getApartmentLen(){
+
+    public int getApartmentLen() {
         return _apartment.getLength();
     }
 }
