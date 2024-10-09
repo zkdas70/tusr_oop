@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddressController {
+    /**
+     * Контролер виджета адрес
+     */
     @FXML
     private TextField PostField;
     @FXML
@@ -38,7 +41,7 @@ public class AddressController {
         validator.validateField(ApartmentField, address.getApartmentLen());
 
         if (validator.IsNotErrors()) {
-            address.setPostIndex(Integer.parseInt(PostField.getText()));
+            address.setPostIndex(PostField.getText());
             address.setCountry(CountryField.getText());
             address.setCity(CityField.getText());
             address.setStreet(StreetField.getText());

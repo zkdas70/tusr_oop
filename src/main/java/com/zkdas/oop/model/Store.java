@@ -6,10 +6,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Store {
+    /**
+     * Модель Store класс содержащий списки
+     */
     static private ObservableList<ItemForList> _items;
     static private ObservableList<CustomerForList> _customers;
 
     public Store() {
+        // если переменные не инициализированы, то инициализируем
         if (_items == null) {
             _items = FXCollections.observableArrayList();
         }
@@ -19,9 +23,9 @@ public class Store {
     }
 
     public ObservableList<ItemForList> getItems() {
-        return _items;
+        return _items; // ObservableList ссылочный тип данных - вернет ссылку на _items
     }
     public ObservableList<CustomerForList> getCustomers() {
-        return _customers;
+        return _customers; // ObservableList ссылочный тип данных - вернет ссылку на _customers
     }
 }

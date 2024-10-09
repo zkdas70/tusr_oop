@@ -4,7 +4,7 @@ public class PostIndex {
     /**
      * Класс для хранения почтово индекса
      */
-    private int postIndex;
+    private String postIndex; // может начинаться с нуля int использовать не корректно
 
     /**
      * Конструктор PostIndex
@@ -16,17 +16,18 @@ public class PostIndex {
      * Конструктор PostIndex
      * @param postIndex int почтовый индекс
      */
-    PostIndex(int postIndex) throws Exception {
+    PostIndex(String postIndex) throws Exception {
         setPostIndex(postIndex);
     }
 
-    public void setPostIndex(int postIndex) throws Exception {
-        if (100_000 > postIndex || postIndex >= 1_000_000) {
+    public void setPostIndex(String postIndex) throws Exception {
+        if (postIndex.length() != 6) {
             throw new Exception("Post index out of bounds");
         }
+        Integer.parseInt(postIndex); // проверка, что содержит лиш числа
         this.postIndex = postIndex;
     }
-    public int getPostIndex() {
+    public String getPostIndex() {
         return postIndex;
     }
     @Override

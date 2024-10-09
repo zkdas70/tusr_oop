@@ -23,7 +23,7 @@ public class Address {
      * @param building String номер дома, строка, не более 10 символов
      * @param apartment String номер квартиры/помещения, не более 10 символов
      */
-    public Address(int index, String country, String citi, String street, String building, String apartment) throws Exception {
+    public Address(String index, String country, String citi, String street, String building, String apartment) throws Exception {
         _index.setPostIndex(index);
         _country.setData(country);
         _city.setData(citi);
@@ -49,7 +49,7 @@ public class Address {
                 address.getStreet(), address.getBuilding(), address.getApartment());
     }
 
-    public void setPostIndex(int index) throws Exception {
+    public void setPostIndex(String index) throws Exception {
         _index.setPostIndex(index);
     }
 
@@ -73,7 +73,7 @@ public class Address {
         _apartment.setData(apartment);
     }
 
-    public int getPostIndex() {
+    public String getPostIndex() {
         return _index.getPostIndex();
     }
 

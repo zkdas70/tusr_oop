@@ -20,7 +20,7 @@ public class CustomerFactory {
         // генерация адреса
         Address address = new Address();
 
-        address.setPostIndex(Integer.parseInt(faker.address().postcode()));
+        address.setPostIndex(faker.address().postcode());
         address.setCountry(faker.address().country());
         address.setCity(faker.address().city());
         address.setStreet(faker.address().streetName());

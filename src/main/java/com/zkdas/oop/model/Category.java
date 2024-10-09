@@ -1,6 +1,9 @@
 package com.zkdas.oop.model;
 
 public enum Category {
+    /**
+     * enum со всеми доступными в программе категориями
+     */
     NONE("нет"),
     ELECTRONICS("электроника"),
     CLOTHING("одежда"),

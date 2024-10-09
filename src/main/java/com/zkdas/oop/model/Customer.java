@@ -48,6 +48,6 @@ public class Customer
         _fulname.setData(fulname);
     }
     public void setAddress(Address address) throws Exception {
-        _address=address;
+        _address = new Address(address); // созданная копия это уже не агрегация, а композиция
     }
 }

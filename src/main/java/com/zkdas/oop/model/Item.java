@@ -69,7 +69,7 @@ public class Item {
     public Category getCategory() {
         return _category;
     }
-    public void setCategory(Category category) throws Exception {
+    public void setCategory(Category category) {
         _category = category;
     }
 }

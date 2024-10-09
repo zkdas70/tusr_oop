@@ -62,9 +62,9 @@ public class DataRequiredValidator {
             if (field.getText().isEmpty()) {
                 throw new Exception("поле" + field.getId() + "пустое");
             }
-            float temp = Integer.parseInt(field.getText());
-            if (100_000 > temp || temp >= 1_000_000) {
-                throw new Exception("Post index out of bounds");
+            Integer.parseInt(field.getText());
+            if (field.getText().length() != 6) {
+                throw new Exception("Post index out of bounds. Post index: " +  field.getText());
             }
             field.setStyle(""); // Сбросить стиль, чтобы вернуть стандартный;
         } catch (Exception ex) {
