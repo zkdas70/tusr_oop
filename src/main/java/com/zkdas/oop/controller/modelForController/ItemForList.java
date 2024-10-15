@@ -11,8 +11,12 @@ public class ItemForList extends Item {
         super(name, info, cost, category);
     }
 
+    public <T extends Item> ItemForList(T item, boolean copyId) throws Exception {
+        super(item, copyId);
+    }
+
     public <T extends Item> ItemForList(T item) throws Exception {
-        this(item.getName(), item.getInfo(), item.getCost(), item.getCategory());
+        super(item);
     }
 
     @Override

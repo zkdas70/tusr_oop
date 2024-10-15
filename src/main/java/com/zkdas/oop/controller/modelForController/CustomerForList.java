@@ -11,8 +11,12 @@ public class CustomerForList extends Customer {
         super(fulname, address);
     }
 
+    public <T extends Customer> CustomerForList(T customer, boolean copyId) throws Exception {
+        super(customer, copyId);
+    }
+
     public <T extends Customer> CustomerForList(T customer) throws Exception {
-        this(customer.getFulname(), customer.getAddress());
+        super(customer);
     }
 
     @Override

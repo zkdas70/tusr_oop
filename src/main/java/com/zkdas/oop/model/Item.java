@@ -33,6 +33,30 @@ public class Item {
         _category = category;
     }
 
+    /**
+     * Копирующий конструктор Item
+     * @param item объект, что надо скопировать
+     * @param copyId True скопирует id, False нет
+     */
+    public Item(Item item,  boolean copyId) throws Exception {
+        if (copyId){
+            _id = item._id;
+        } else {
+            _id = _idGenerator.get_next_id();
+        }
+        setInfo(item.getInfo());
+        setName(item.getName());
+        setCost(item.getCost());
+        setCategory(item.getCategory());
+    }
+    /**
+     * Копирующий конструктор Item, копирует id
+     * @param item объект, что надо скопировать
+     */
+    public Item(Item item) throws Exception {
+        this(item, true);
+    }
+
     public int getId() {
         return _id;
     }
