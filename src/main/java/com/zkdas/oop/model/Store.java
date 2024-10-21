@@ -11,6 +11,7 @@ public class Store {
      */
     static private ObservableList<ItemForList> _items;
     static private ObservableList<CustomerForList> _customers;
+    static private ObservableList<Order> _orders;
 
     public Store() {
         // если переменные не инициализированы, то инициализируем
@@ -20,6 +21,10 @@ public class Store {
         if (_customers == null) {
             _customers = FXCollections.observableArrayList();
         }
+
+        if (_orders == null) {
+            _orders = FXCollections.observableArrayList();
+        }
     }
 
     public ObservableList<ItemForList> getItems() {
@@ -27,5 +32,8 @@ public class Store {
     }
     public ObservableList<CustomerForList> getCustomers() {
         return _customers; // ObservableList ссылочный тип данных - вернет ссылку на _customers
+    }
+    public ObservableList<Order> getOrders() {
+        return _orders;
     }
 }

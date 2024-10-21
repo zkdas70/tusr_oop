@@ -2,6 +2,7 @@ package com.zkdas.oop.controller;
 
 import com.zkdas.oop.controller.modelForController.CustomerForList;
 import com.zkdas.oop.controller.modelForController.ItemForList;
+import com.zkdas.oop.model.Order;
 import com.zkdas.oop.model.Store;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,44 +31,60 @@ public class CartsTabController {
         return customer_ChoseBox.getValue();
     }
 
+    private void updateCost(){
+        CustomerForList customer = getSelectedCustomer();
+        if(customer != null){
+            AmountLabel.setText(String.valueOf(customer.get_cart().getAmount()));
+        }
+
+    }
+
     @FXML
-    private void add_btn_click(ActionEvent ignoredE) throws Exception {
+    private void add_btn_click(ActionEvent ignoredE) {
         // получаем выбраный элемент
         ItemForList selectedItem = items_listView.getSelectionModel().getSelectedItem();
 
         // не должен быть пустым
-        if (selectedItem != null) {
+        if (selectedItem != null && getSelectedCustomer() != null) {
             getSelectedCustomer().get_cart().addItem(selectedItem);
+            updateCost();
         }
     }
 
     @FXML
-    private void clear_btn_click(ActionEvent ignoredE) throws Exception {
+    private void clear_btn_click(ActionEvent ignoredE) {
         CustomerForList selectedCustomer = getSelectedCustomer();
         if (selectedCustomer != null) {
             selectedCustomer.get_cart().getItems().clear();
+            updateCost();
         }
     }
 
     @FXML
-    private void remove_btn_click(ActionEvent ignoredE) throws Exception {
+    private void remove_btn_click(ActionEvent ignoredE) {
         CustomerForList selectedCustomer = getSelectedCustomer();
         ItemForList selectedItem = cart_listView.getSelectionModel().getSelectedItem();
         if (selectedCustomer != null && selectedItem != null) {
             selectedCustomer.get_cart().removeItem(selectedItem);
+            updateCost();
         }
     }
 
     @FXML
-    private void create_btn_click(ActionEvent ignoredE) throws Exception {
-
+    private void create_btn_click(ActionEvent ignoredE) {
+        CustomerForList selectedCustomer = getSelectedCustomer();
+        if (selectedCustomer != null) {
+            Store store = new Store();
+            store.getOrders().add(new Order(selectedCustomer));
+        }
     }
 
     @FXML
-    private void CustomerListClick(ActionEvent ignoredE) throws Exception {
+    private void CustomerListClick(ActionEvent ignoredE) {
         CustomerForList selectedCustomer = getSelectedCustomer();
         if (selectedCustomer != null) {
             cart_listView.setItems(selectedCustomer.get_cart().getItems());
+            updateCost();
         }
     }
 }

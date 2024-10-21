@@ -2,7 +2,7 @@ package com.zkdas.oop.model;
 
 public enum OrderStatus {
     /**
-     * enum со всеми доступными в программе категориями
+     * Enum со всеми доступными в программе категориями
      */
     New("новый"),
     Processing("обработка"),

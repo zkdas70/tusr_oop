@@ -1,8 +1,9 @@
 package com.zkdas.oop.model;
 
+import com.zkdas.oop.controller.modelForController.ItemForList;
 import com.zkdas.oop.service.IdGenerator;
+import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
@@ -11,46 +12,66 @@ public class Order {
      */
     private static final IdGenerator _idGenerator = new IdGenerator();
     private final int _id;
-    private final Date _date = new Date();
+    private final Date _date = new Date(); // создаст текущую дату
     private Address _address;
+    private String _name;
     private double _prise;
-    private ArrayList<Item> _items;
+    private ObservableList<ItemForList> _items;
+    private OrderStatus _orderStatus;
 
     public Order(Customer customer) {
         _id = _idGenerator.get_next_id();
         _address = customer.getAddress();
-        _prise = 0;
+        _name = customer.getFulname();
+        _items = customer.get_cart().getItems();
+        _prise = customer.get_cart().getAmount();
+        _orderStatus = OrderStatus.New;
     }
 
-    public int get_id() {
+    public int getId() {
         return _id;
     }
 
-    public Date get_date() {
+    public Date getDate() {
         return _date;
     }
 
-    public Address get_address() {
+    public Address getAddress() {
         return _address;
     }
 
-    public void set_address(Address address) {
+    public void setAddress(Address address) {
         this._address = address;
     }
 
-    public double get_prise() {
+    public double getPrise() {
         return _prise;
     }
 
-    public void set_prise(double prise) {
+    public void setPrise(double prise) {
         this._prise = prise;
     }
 
-    public ArrayList<Item> get_items() {
+    public ObservableList<ItemForList> getItems() {
         return _items;
     }
 
-    public void set_items(ArrayList<Item> items) {
+    public void setItems(ObservableList<ItemForList> items) {
         this._items = items;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return _orderStatus;
+    }
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this._orderStatus = orderStatus;
+    }
+
+    public String getName() {
+        return _name;
+    }
+
+    public void setName(String _name) {
+        this._name = _name;
     }
 }

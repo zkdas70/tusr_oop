@@ -54,9 +54,9 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ChoiceBox fx:id="StatusChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="CreatedField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="IdField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <AnchorPane minHeight="50.0">
@@ -81,26 +81,19 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Label>
-                        <ListView GridPane.rowIndex="1" />
+                        <ListView fx:id="cart_listView" GridPane.rowIndex="1" />
                         <Label alignment="CENTER" text="Amount" GridPane.rowIndex="2">
                            <font>
                               <Font name="System Bold" size="11.0" />
                            </font></Label>
-                        <Label text="Label" GridPane.rowIndex="3">
+                        <Label fx:id="AmountLabel" text="Label" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="25.0" />
                            </font></Label>
                      </children>
                   </GridPane>
                </children></VBox>
-            <TableView>
-               <columns>
-                  <TableColumn prefWidth="28.0" resizable="false" text="id" />
-                  <TableColumn prefWidth="75.0" resizable="false" text="created" />
-                  <TableColumn prefWidth="76.0" resizable="false" text="Order Status" />
-                  <TableColumn prefWidth="120.0" resizable="false" text="Customer Full Name" />
-               </columns>
-            </TableView>
+            <TableView fx:id="order_tableView" />
          </children>
       </GridPane>
    </children>
