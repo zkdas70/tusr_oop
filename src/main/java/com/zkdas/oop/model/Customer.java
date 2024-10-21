@@ -12,7 +12,7 @@ public class Customer {
     private final int _id;// целочисленное readonly-поле, хранящее уникальный номер товара.
     protected final LimitedSting _fulname = new LimitedSting(200);//строковое поле с полным именем покупателя (Фамилия имя отчество), до 200 символов.
     private Address _address;
-    private Cart _cart;
+    private final Cart _cart;
 
     /**
      * Конструктор Customer
@@ -22,7 +22,7 @@ public class Customer {
     public Customer(String fulname, Address address) throws Exception {
         _id = _idGenerator.get_next_id();
 
-        setFulname(fulname);
+        _fulname.setData(fulname);
         _address = new Address(address); // созданная копия это уже не агрегация, а композиция
         _cart = new Cart();
     }
@@ -39,7 +39,7 @@ public class Customer {
             _id = _idGenerator.get_next_id();
         }
         setFulname(customer.getFulname());
-        _address = customer.getAddress();
+        setAddress(customer.getAddress());
         _cart = customer.get_cart();
     }
 

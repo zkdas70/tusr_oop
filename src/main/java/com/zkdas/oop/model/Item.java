@@ -30,7 +30,7 @@ public class Item {
         setName(name);
         setCost(cost);
 
-        _category = category;
+        setCategory(category);
     }
 
     /**

@@ -15,16 +15,25 @@ public class MainWindowController {
      * Контролер Главного окна
      */
     @FXML
-    private Tab containerTab1;
+    private Tab containerTabItems;
     @FXML
-    private Tab containerTab2;
+    private Tab containerTabCustomers;
+    @FXML
+    private Tab containerTabCarts;
+    @FXML
+    private Tab containerTabOrders;
 
-    private ItemsTabController controllerTab1;
-    private CustomersTabController controllerTab2;
+    // контролеры вкладок
+    private ItemsTabController ItemsTabController;
+    private CustomersTabController CustomersTabController;
+    private CartsTabController CartsTabController;
+    private OrdersTabController OrdersTabController;
 
     public void initialize() throws IOException {
         loadItemsTab();
         loadCustomersTab();
+        loadCartsTab();
+        loadOrdersTab();
     }
 
 
@@ -33,11 +42,10 @@ public class MainWindowController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/ItemsTab.fxml"));
         Parent subview = loader.load();// загрузка данных из файла
         // вставка subview во вкладку
-        containerTab1.setContent(subview);
-
+        containerTabItems.setContent(subview);
         // Получаю ссылку на контролер, который был связан с загруженным FXML-файлом.
         // Важно: контролер создастся только после FXMLLoader.load()
-        controllerTab1 = loader.getController();
+        ItemsTabController = loader.getController();
 
     }
 
@@ -47,30 +55,50 @@ public class MainWindowController {
         Parent subview = loader.load();// загрузка данных из файла
 
         // вставка subview во вкладку
-        containerTab2.setContent(subview);
-
+        containerTabCustomers.setContent(subview);
         // получаю ссылку на контролер, который был связан с загруженным FXML-файлом.
-        controllerTab2 = loader.getController();
+        CustomersTabController = loader.getController();
+    }
+
+    private void loadCartsTab() throws IOException {
+        // указания пути к fxml файлу
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/CartsTab.fxml"));
+        Parent subview = loader.load();// загрузка данных из файла
+
+        // вставка subview во вкладку
+        containerTabCarts.setContent(subview);
+        // получаю ссылку на контролер, который был связан с загруженным FXML-файлом.
+        CartsTabController = loader.getController();
+    }
+    private void loadOrdersTab() throws IOException {
+        // указания пути к fxml файлу
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/OrdersTab.fxml"));
+        Parent subview = loader.load();// загрузка данных из файла
+
+        // вставка subview во вкладку
+        containerTabOrders.setContent(subview);
+        // получаю ссылку на контролер, который был связан с загруженным FXML-файлом.
+        OrdersTabController = loader.getController();
     }
 
     @FXML
     private void menuGenerateElementClick(ActionEvent actionEvent) throws Exception {
-        if (containerTab1.isSelected()) {
-            controllerTab1.addItem(ItemFactory.createItem());
-        } else if (containerTab2.isSelected()) {
-            controllerTab2.addCustomer(CustomerFactory.createCustomer());
+        if (containerTabItems.isSelected()) {
+            ItemsTabController.addItem(ItemFactory.createItem());
+        } else if (containerTabCustomers.isSelected()) {
+            CustomersTabController.addCustomer(CustomerFactory.createCustomer());
         }
     }
 
     @FXML
     private void menuGenerateElementsClick(ActionEvent actionEvent) throws Exception {
-        if (containerTab1.isSelected()) {
+        if (containerTabItems.isSelected()) {
             for (int i = 0; i < 10; i++) {
-                controllerTab1.addItem(ItemFactory.createItem());
+                ItemsTabController.addItem(ItemFactory.createItem());
             }
-        } else if (containerTab2.isSelected()) {
+        } else if (containerTabCustomers.isSelected()) {
             for (int i = 0; i < 10; i++) {
-                controllerTab2.addCustomer(CustomerFactory.createCustomer());
+                CustomersTabController.addCustomer(CustomerFactory.createCustomer());
             }
         }
     }
