@@ -5,10 +5,15 @@ import com.zkdas.oop.model.Order;
 import com.zkdas.oop.model.OrderStatus;
 import com.zkdas.oop.model.Store;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class OrdersTabController {
@@ -24,10 +29,14 @@ public class OrdersTabController {
     private ListView<ItemForList> cart_listView;
     @FXML
     private TableView<Order> order_tableView;
+    @FXML
+    private GridPane addressPane;
+    private AddressController addressController;
 
-    public void initialize() {
-        StatusChoiceBox.getItems().addAll(OrderStatus.values());
-
+    /**
+     * Инициализация таблицы
+     */
+    private void tableInitialize() {
         // Создаем колонки с фиксированной шириной
         TableColumn<Order, Integer> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(
@@ -60,5 +69,53 @@ public class OrdersTabController {
         Store store = new Store();
         order_tableView.setItems(store.getOrders());
 
+        // Добавляем обработчик выбора строки
+        order_tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                orderTableViewAction(newValue);
+            }
+        });
+    }
+
+    public void initialize() throws IOException {
+        // установка выборов в ChoiceBox
+        StatusChoiceBox.getItems().addAll(OrderStatus.values());
+
+        // Инициализация таблицы
+        tableInitialize();
+
+        // загрузка виджета
+        // указания пути к fxml файлу
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/AddressControl.fxml"));
+        Parent subview = loader.load();// загрузка данных из файла
+        addressController = loader.getController(); // присвоение контролера
+        // вставка subview
+        addressPane.getChildren().add(subview);
+    }
+
+    /**
+     * Обработчик выбора элемента в таблице
+     * @param selectedOrder выбранный элемент
+     */
+    private void orderTableViewAction(Order selectedOrder) {
+        addressController.SetAddress(selectedOrder.getAddress()); // установка адреса
+        IdField.setText(String.valueOf(selectedOrder.getId())); // установка id
+        CreatedField.setText(String.valueOf(selectedOrder.getDate())); // установка даты
+        StatusChoiceBox.getSelectionModel().select(selectedOrder.getOrderStatus()); // установка статуса заказа
+
+        // установка списка заказов
+        cart_listView.getItems().clear(); // отчистка старого списка
+        cart_listView.getItems().addAll(selectedOrder.getItems());
+        // cart_listView.setItems(selectedOrder.getItems()); // почему-то не работает
+
+        AmountLabel.setText(String.valueOf(selectedOrder.getPrise())); // установка цены
+    }
+
+    @FXML
+    private void StatusChoiceBoxAction(ActionEvent event) {
+        Order selectionOrder = order_tableView.getSelectionModel().getSelectedItem();
+        if (selectionOrder != null) {
+            selectionOrder.setOrderStatus(StatusChoiceBox.getSelectionModel().getSelectedItem());
+        }
     }
 }

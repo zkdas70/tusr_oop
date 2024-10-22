@@ -54,15 +54,22 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <ChoiceBox fx:id="StatusChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ChoiceBox fx:id="StatusChoiceBox" onAction="#StatusChoiceBoxAction" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="CreatedField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="IdField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <AnchorPane minHeight="50.0">
+                  <GridPane fx:id="addressPane">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin></AnchorPane>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+                     </VBox.margin>
+                  </GridPane>
                   <GridPane>
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -86,7 +93,7 @@
                            <font>
                               <Font name="System Bold" size="11.0" />
                            </font></Label>
-                        <Label fx:id="AmountLabel" text="Label" GridPane.rowIndex="3">
+                        <Label fx:id="AmountLabel" text="0.0" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="25.0" />
                            </font></Label>
