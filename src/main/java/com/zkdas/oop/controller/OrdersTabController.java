@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -112,7 +111,7 @@ public class OrdersTabController {
     }
 
     @FXML
-    private void StatusChoiceBoxAction(ActionEvent event) {
+    private void StatusChoiceBoxAction(ActionEvent ignoredEvent) {
         Order selectionOrder = order_tableView.getSelectionModel().getSelectedItem();
         if (selectionOrder != null) {
             selectionOrder.setOrderStatus(StatusChoiceBox.getSelectionModel().getSelectedItem());
