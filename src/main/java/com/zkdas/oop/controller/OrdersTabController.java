@@ -103,9 +103,10 @@ public class OrdersTabController {
         StatusChoiceBox.getSelectionModel().select(selectedOrder.getOrderStatus()); // установка статуса заказа
 
         // установка списка заказов
-        cart_listView.getItems().clear(); // отчистка старого списка
-        cart_listView.getItems().addAll(selectedOrder.getItems());
-        // cart_listView.setItems(selectedOrder.getItems()); // почему-то не работает
+        // cart_listView.getItems().clear(); // отчистка старого списка
+        // cart_listView.getItems().addAll(selectedOrder.getItems());
+        cart_listView.setItems(selectedOrder.getItems()); // почему-то не работает
+        cart_listView.refresh();  // обновит список listView (автоматичесик не всегда вызывается)
 
         AmountLabel.setText(String.valueOf(selectedOrder.getPrise())); // установка цены
     }

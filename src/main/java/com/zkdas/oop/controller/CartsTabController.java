@@ -84,6 +84,7 @@ public class CartsTabController {
         CustomerForList selectedCustomer = getSelectedCustomer();
         if (selectedCustomer != null) {
             cart_listView.setItems(selectedCustomer.get_cart().getItems());
+            cart_listView.refresh(); // обновит список listView (автоматичесик не всегда вызывается)
             updateCost();
         }
     }
