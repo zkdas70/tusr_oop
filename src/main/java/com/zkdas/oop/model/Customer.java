@@ -88,4 +88,12 @@ public class Customer {
     public Cart get_cart() {
         return _cart;
     }
+
+    public boolean is_Priority() {
+        return _isPriority;
+    }
+
+    public void set_isPriority(boolean _isPriority) {
+        this._isPriority = _isPriority;
+    }
 }
