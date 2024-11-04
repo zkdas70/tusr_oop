@@ -25,6 +25,9 @@ public class CustomersTabController {
     private VBox interfaceContainer;
 
     private AddressController addressController;
+
+    @FXML
+    private CheckBox isPriority;
     // текстовые поля
     @FXML
     private TextField id_field;
@@ -96,7 +99,7 @@ public class CustomersTabController {
 
         // если все поля прошли валидацию
         if (validator.IsNotErrors()) {
-            items.add(new CustomerForList(ful_name_field.getText(), address));
+            items.add(new CustomerForList(ful_name_field.getText(), address, isPriority.isCache()));
 
             clearField();
         }

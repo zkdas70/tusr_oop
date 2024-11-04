@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="widget_base" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zkdas.oop.controller.CustomersTabController">
+<AnchorPane fx:id="widget_base" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zkdas.oop.controller.CustomersTabController">
     <!-- Ваши элементы интерфейса -->
 
 
@@ -34,14 +34,17 @@
                         </columnConstraints>
                         <rowConstraints>
                             <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                     <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="25.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
                         </rowConstraints>
                         <children>
                             <Label text="id" />
-                            <Label fx:id="cost_fild" text="FulName" GridPane.rowIndex="1" />
-                            <TextField fx:id="ful_name_field" prefHeight="25.0" prefWidth="172.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <Label fx:id="cost_fild" text="FulName" GridPane.rowIndex="2" />
+                            <TextField fx:id="ful_name_field" prefHeight="25.0" prefWidth="172.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             <TextField fx:id="id_field" accessibleRole="TEXT" maxWidth="120.0" GridPane.columnIndex="1" />
+                     <CheckBox fx:id="isPriority" mnemonicParsing="false" text="is Priority" GridPane.rowIndex="1" />
+                     <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         </children>
                     </GridPane>
                 </children>

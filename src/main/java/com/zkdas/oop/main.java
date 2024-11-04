@@ -33,7 +33,5 @@ public class main extends Application {
 
     public static void main(String[] args) {
         launch(); // закпускает Application.launch() (сделает тех. загрузку и запустит .start() )
-
-
     }
 }

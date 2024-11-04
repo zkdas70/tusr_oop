@@ -13,18 +13,30 @@ public class Customer {
     protected final LimitedSting _fulname = new LimitedSting(200);//строковое поле с полным именем покупателя (Фамилия имя отчество), до 200 символов.
     private Address _address;
     private final Cart _cart;
+    private boolean _isPriority;
 
     /**
      * Конструктор Customer
      * @param fulname String имя покупателя (Фамилия имя отчество), до 200 символов
      * @param address String адрес доставки для покупателя до 500 символов
+     * @param isPriority boolean приоритетный ли пользователь
      */
-    public Customer(String fulname, Address address) throws Exception {
+    public Customer(String fulname, Address address, boolean isPriority) throws Exception {
         _id = _idGenerator.get_next_id();
 
         _fulname.setData(fulname);
         _address = new Address(address); // созданная копия это уже не агрегация, а композиция
         _cart = new Cart();
+        _isPriority = isPriority;
+    }
+
+    /**
+     * Конструктор Customer (создаст не приоритетного пользователя)
+     * @param fulname String имя покупателя (Фамилия имя отчество), до 200 символов
+     * @param address String адрес доставки для покупателя до 500 символов
+     */
+    public Customer(String fulname, Address address) throws Exception {
+        this(fulname, address, false);
     }
 
     /**

@@ -21,11 +21,11 @@ public class OrdersTabController {
     @FXML
     private TextField CreatedField;
     @FXML
-    private Label AmountLabel;
+    protected Label AmountLabel;
     @FXML
     private ChoiceBox<OrderStatus> StatusChoiceBox;
     @FXML
-    private ListView<ItemForList> cart_listView;
+    protected ListView<ItemForList> cart_listView;
     @FXML
     private TableView<Order> order_tableView;
     @FXML
@@ -35,7 +35,7 @@ public class OrdersTabController {
     /**
      * Инициализация таблицы
      */
-    private void tableInitialize() {
+    protected void tableInitialize() {
         // Создаем колонки с фиксированной шириной
         TableColumn<Order, Integer> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(
@@ -96,7 +96,7 @@ public class OrdersTabController {
      * Обработчик выбора элемента в таблице
      * @param selectedOrder выбранный элемент
      */
-    private void orderTableViewAction(Order selectedOrder) {
+    protected void orderTableViewAction(Order selectedOrder) {
         addressController.SetAddress(selectedOrder.getAddress()); // установка адреса
         IdField.setText(String.valueOf(selectedOrder.getId())); // установка id
         CreatedField.setText(String.valueOf(selectedOrder.getDate())); // установка даты
@@ -111,8 +111,10 @@ public class OrdersTabController {
         AmountLabel.setText(String.valueOf(selectedOrder.getPrise())); // установка цены
     }
 
+
+
     @FXML
-    private void StatusChoiceBoxAction(ActionEvent ignoredEvent) {
+    protected void StatusChoiceBoxAction(ActionEvent ignoredEvent) {
         Order selectionOrder = order_tableView.getSelectionModel().getSelectedItem();
         if (selectionOrder != null) {
             selectionOrder.setOrderStatus(StatusChoiceBox.getSelectionModel().getSelectedItem());

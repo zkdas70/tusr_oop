@@ -7,8 +7,8 @@ public class CustomerForList extends Customer {
     /**
      * Класс Customer для отображения в списке
      */
-    public CustomerForList(String fulname, Address address) throws Exception {
-        super(fulname, address);
+    public CustomerForList(String fulname, Address address, boolean isPriority) throws Exception {
+        super(fulname, address, isPriority);
     }
 
     public <T extends Customer> CustomerForList(T customer, boolean copyId) throws Exception {
