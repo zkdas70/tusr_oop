@@ -31,9 +31,9 @@ public class CartsTabController {
         return customer_ChoseBox.getValue();
     }
 
-    private void updateCost(){
+    private void updateCost() {
         CustomerForList customer = getSelectedCustomer();
-        if(customer != null){
+        if (customer != null) {
             AmountLabel.setText(String.valueOf(customer.get_cart().getAmount()));
         }
 
@@ -73,7 +73,7 @@ public class CartsTabController {
     @FXML
     private void create_btn_click(ActionEvent ignoredE) {
         CustomerForList selectedCustomer = getSelectedCustomer();
-        if (selectedCustomer != null) {
+        if (selectedCustomer != null && !selectedCustomer.get_cart().getItems().isEmpty()) {
             Store store = new Store();
             store.getOrders().add(new Order(selectedCustomer));
         }
