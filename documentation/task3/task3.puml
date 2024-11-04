@@ -1,0 +1,249 @@
+@startuml
+
+class CustomerFactory {
++ {static} Customer createCustomer()
+}
+class ItemFactory {
++ {static} Item createItem()
+}
+
+class IdGenerator {
+- int _lastId
++ <<Create>> IdGenerator()
++ int get_next_id()
+}
+
+
+class DataRequiredValidator {
+- int _errors_counter
++ void validateField(T)
++ void validateField(T,int)
++ void validateNumberField(T,float,float)
++ void validatePostField(T)
++ void add_error()
++ boolean IsNotErrors()
+}
+
+
+class ValueValidator {
++ {static} void AssertStringOnLength(String,int,String)
++ {static} void AssertStringOnLength(String,int)
+}
+
+class PostIndex {
+- String postIndex
++ <<Create>> PostIndex()
+~ <<Create>> PostIndex(String)
++ void setPostIndex(String)
++ String getPostIndex()
++ String toString()
+}
+class LimitedFloat {
+- float _min
+- float _max
+- float _vale
++ <<Create>> LimitedFloat(float,float)
+- void _check_vale(float)
++ void setValue(float)
++ float getValue()
++ String toString()
+}
+class LimitedSting {
+ - int _length
+ - String _data
+ + <<Create>> LimitedSting(int)
+ - void _check_length(String)
+ + void setData(String)
+ + int getLength()
+ + String toString()
+ }
+
+
+class Order {
+- {static} IdGenerator _idGenerator
+- int _id
+- Date _date
+- Address _address
+- String _name
+- double _prise
+- ObservableList<ItemForList> _items
+- OrderStatus _orderStatus
++ <<Create>> Order(Customer)
++ int getId()
++ Date getDate()
++ Address getAddress()
++ void setAddress(Address)
++ double getPrise()
++ void setPrise(double)
++ ObservableList<ItemForList> getItems()
++ void setItems(ObservableList<ItemForList>)
++ OrderStatus getOrderStatus()
++ void setOrderStatus(OrderStatus)
++ String getName()
++ void setName(String)
+
+}
+
+class Store {
+- {static} ObservableList<ItemForList> _items
+- {static} ObservableList<CustomerForList> _customers
+- {static} ObservableList<Order> _orders
++ <<Create>> Store()
++ ObservableList<ItemForList> getItems()
++ ObservableList<CustomerForList> getCustomers()
++ ObservableList<Order> getOrders()
+}
+
+class Cart {
+- ObservableList<ItemForList> items
++ <<Create>> Cart()
++ double getAmount()
++ void addItem(ItemForList)
++ void removeItem(ItemForList)
++ void removeItemById(int)
++ ObservableList<ItemForList> getItems()
++ void setItems(ObservableList<ItemForList>)
+}
+
+class Customer {
+- {static} IdGenerator _idGenerator
+- int _id
+# LimitedSting _fulname
+- Address _address
+- Cart _cart
++ <<Create>> Customer(String,Address)
++ <<Create>> Customer(T,boolean)
++ <<Create>> Customer(T)
++ int getId()
++ String getFulname()
++ Address getAddress()
++ void setFulname(String)
++ void setAddress(Address)
++ Cart get_cart()
+}
+enum OrderStatus {
++  New
++  Processing
++  Assembly
++  Sent
++  Delivered
++  Returned
++  Abandoned
+- String displayName
+~ <<Create>> OrderStatus(String)
++ String toString()
+}
+class Address {
+- PostIndex _index
+- LimitedSting _country
+- LimitedSting _city
+- LimitedSting _street
+- LimitedSting _building
+- LimitedSting _apartment
++ <<Create>> Address(String,String,String,String,String,String)
++ <<Create>> Address()
++ <<Create>> Address(T)
++ void setPostIndex(String)
++ void setCountry(String)
++ void setCity(String)
++ void setStreet(String)
++ void setBuilding(String)
++ void setApartment(String)
++ String getPostIndex()
++ String getCountry()
++ String getCity()
++ String getStreet()
++ String getBuilding()
++ String getApartment()
++ int getCountryLen()
++ int getCityLen()
++ int getStreetLen()
++ int getBuildingLen()
++ int getApartmentLen()
+}
+enum Category {
++  NONE
++  ELECTRONICS
++  CLOTHING
++  GROCERIES
++  FURNITURE
++  TOYS
++  BOOKS
++  BEAUTY_PRODUCTS
+- String displayName
+~ <<Create>> Category(String)
++ String toString()
+}
+class Item {
+- {static} IdGenerator _idGenerator
+- int _id
+# LimitedSting _name
+- LimitedSting _info
+- LimitedFloat _cost
+- Category _category
++ <<Create>> Item(String,String,float,Category)
++ <<Create>> Item(Item,boolean)
++ <<Create>> Item(Item)
++ int getId()
++ String getName()
++ void setName(String)
++ String getInfo()
++ void setInfo(String)
++ float getCost()
++ void setCost(float)
++ Category getCategory()
++ void setCategory(Category)
+}
+
+
+class main {
++ void start(Stage)
++ {static} void main(String[])
+}
+
+
+class CustomerForList {
++ <<Create>> CustomerForList(String,Address)
++ <<Create>> CustomerForList(T,boolean)
++ <<Create>> CustomerForList(T)
++ String toString()
+}
+
+class ItemForList {
++ <<Create>> ItemForList(String,String,float,Category)
++ <<Create>> ItemForList(T,boolean)
++ <<Create>> ItemForList(T)
++ String toString()
+}
+
+Item <|-- ItemForList
+Application <|-- main
+Customer <|-- CustomerForList
+
+
+IdGenerator "1"<--*"1" Customer
+IdGenerator "1"<--*"1" Item
+IdGenerator "1"<--*"1" Order
+
+LimitedSting "1"<--*"2" Customer
+LimitedSting "1"<--*"2" Item
+LimitedSting "1"<--*"5" Address
+
+LimitedFloat "1"<--*"1" Item
+
+PostIndex "1"<--*"1" Address
+
+Customer "1"<--*"1" Address
+
+Order "1"<--#"1" Address
+Order "1"<--#"1" Customer
+Order "1"<--*"1" OrderStatus
+
+Item "1"<--*"1" Category
+
+Cart "1"<--*"1" Customer
+
+Store "1"<--#"*" Item
+Store "1"<--#"*" Customer
+Store "1"<--#"*" Order
+@enduml

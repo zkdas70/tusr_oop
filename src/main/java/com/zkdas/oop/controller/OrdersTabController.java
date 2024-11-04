@@ -118,6 +118,9 @@ public class OrdersTabController {
         Order selectionOrder = order_tableView.getSelectionModel().getSelectedItem();
         if (selectionOrder != null) {
             selectionOrder.setOrderStatus(StatusChoiceBox.getSelectionModel().getSelectedItem());
+
+            // обновляем данные в таблице
+            order_tableView.refresh();
         }
     }
 }
