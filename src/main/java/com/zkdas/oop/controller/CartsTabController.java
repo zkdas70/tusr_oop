@@ -75,7 +75,7 @@ public class CartsTabController {
         CustomerForList selectedCustomer = getSelectedCustomer();
         if (selectedCustomer != null && !selectedCustomer.get_cart().getItems().isEmpty()) {
             Store store = new Store();
-            store.getOrders().add(new Order(selectedCustomer));
+            store.getOrders().add(selectedCustomer.createOrder());
         }
     }
 

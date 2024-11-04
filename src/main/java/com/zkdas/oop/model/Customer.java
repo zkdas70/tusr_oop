@@ -4,6 +4,8 @@ import com.zkdas.oop.service.IdGenerator;
 import com.zkdas.oop.service.limitedStrinds.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
 
+import java.util.ArrayList;
+
 public class Customer {
     /**
      * Класс модель данных Customer
@@ -11,8 +13,9 @@ public class Customer {
     private static final IdGenerator _idGenerator = new IdGenerator(); // генератор id принажавший не объекту, а классу
     private final int _id;// целочисленное readonly-поле, хранящее уникальный номер товара.
     protected final LimitedSting _fulname = new LimitedSting(200);//строковое поле с полным именем покупателя (Фамилия имя отчество), до 200 символов.
-    private Address _address;
-    private final Cart _cart;
+    private Address _address; // Address покупателя
+    private final Cart _cart; // корзина покупателя
+    private ArrayList<Order> _orders = new ArrayList<>(); // все заказы покупателя (в виде ссылок)
     private boolean _isPriority;
 
     /**
@@ -25,7 +28,7 @@ public class Customer {
         _id = _idGenerator.get_next_id();
 
         _fulname.setData(fulname);
-        _address = new Address(address); // созданная копия это уже не агрегация, а композиция
+        _address = address.clone(); // созданная копия это уже не агрегация, а композиция
         _cart = new Cart();
         _isPriority = isPriority;
     }
@@ -52,7 +55,7 @@ public class Customer {
         }
         setFulname(customer.getFulname());
         setAddress(customer.getAddress());
-        _cart = customer.get_cart();
+        _cart = customer.get_cart().clone();
     }
 
     /**
@@ -95,5 +98,18 @@ public class Customer {
 
     public void set_isPriority(boolean _isPriority) {
         this._isPriority = _isPriority;
+    }
+
+    public Order createOrder() {
+        Order order = new Order(this);
+        _orders.add(order);
+        return order;
+    }
+    public ArrayList<Order> get_orders() {
+        return _orders;
+    }
+
+    public void set_orders(ArrayList<Order> _orders) {
+        this._orders = _orders;
     }
 }

@@ -3,7 +3,7 @@ package com.zkdas.oop.model;
 import com.zkdas.oop.service.limitedStrinds.LimitedSting;
 import com.zkdas.oop.service.limitedStrinds.PostIndex;
 
-public class Address {
+public class Address implements Cloneable {
     /**
      * Класс модель данных Address
      */
@@ -13,6 +13,16 @@ public class Address {
     private final LimitedSting _street = new LimitedSting(100); // улица, строка, не более 100 символов.
     private final LimitedSting _building = new LimitedSting(10);// номер дома, строка, не более 10 символов.
     private final LimitedSting _apartment = new LimitedSting(10);// номер квартиры/помещения, не более 10 символов.
+
+    @Override
+    public Address clone() {
+        try {
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return (Address) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 
     /**
      * Конструктор класса Address

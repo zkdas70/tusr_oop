@@ -1,6 +1,6 @@
 package com.zkdas.oop.service.limitedStrinds;
 
-public class LimitedFloat {
+public class LimitedFloat implements Cloneable {
     /**
      * Класс лимитированной по длине Float числа
      */
@@ -8,6 +8,16 @@ public class LimitedFloat {
     private final float _min;
     private final float _max;
     private float _vale;
+
+    @Override
+    public LimitedSting clone(){
+        try {
+            LimitedSting clone = (LimitedSting) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * конструктор LimitedFloat

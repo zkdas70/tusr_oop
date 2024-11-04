@@ -4,12 +4,29 @@ import com.zkdas.oop.controller.modelForController.ItemForList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 
-public class Cart {
+public class Cart implements Cloneable {
     private ObservableList<ItemForList> items = FXCollections.observableArrayList();
 
+    /**
+     * Пустой конструктор Cart
+     */
     public Cart() {
+    }
+
+    /**
+     * Копирующий конструктор Cart
+     * @param cart наследник Cart
+     */
+    public <T extends Cart> Cart(T cart){
+        items.setAll(FXCollections.observableArrayList(cart.getItems()));
+    }
+
+    @Override
+    public Cart clone() {
+        Cart clone = new Cart();
+        clone.setItems(FXCollections.observableArrayList(items));
+        return clone;
     }
 
     public double getAmount(){
