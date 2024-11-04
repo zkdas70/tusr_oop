@@ -2,6 +2,7 @@ package com.zkdas.oop.model;
 
 import com.zkdas.oop.controller.modelForController.ItemForList;
 import com.zkdas.oop.service.IdGenerator;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.Date;
@@ -13,18 +14,21 @@ public class Order {
     private static final IdGenerator _idGenerator = new IdGenerator();
     private final int _id;
     private final Date _date = new Date(); // создаст текущую дату
-    private Address _address;
-    private String _name;
-    private double _prise;
-    private ObservableList<ItemForList> _items;
+    private Address _address; // адрес доставки (агрегируется может лучше компазировать?)
+    private String _name; // имя покупателя
+    private double _prise; // цена
+    private ObservableList<ItemForList> _items; // веши что заказали
     private OrderStatus _orderStatus;
 
     public Order(Customer customer) {
         _id = _idGenerator.get_next_id();
+
+
         _address = customer.getAddress();
         _name = customer.getFulname();
-        _items = customer.get_cart().getItems();
+        _items = FXCollections.observableArrayList(customer.get_cart().getItems());
         _prise = customer.get_cart().getAmount();
+
         _orderStatus = OrderStatus.New;
     }
 
@@ -63,6 +67,7 @@ public class Order {
     public OrderStatus getOrderStatus() {
         return _orderStatus;
     }
+
     public void setOrderStatus(OrderStatus orderStatus) {
         this._orderStatus = orderStatus;
     }
