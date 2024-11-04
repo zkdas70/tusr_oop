@@ -44,7 +44,6 @@
                             <TextField fx:id="ful_name_field" prefHeight="25.0" prefWidth="172.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             <TextField fx:id="id_field" accessibleRole="TEXT" maxWidth="120.0" GridPane.columnIndex="1" />
                      <CheckBox fx:id="isPriority" mnemonicParsing="false" text="is Priority" GridPane.rowIndex="1" />
-                     <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         </children>
                     </GridPane>
                 </children>

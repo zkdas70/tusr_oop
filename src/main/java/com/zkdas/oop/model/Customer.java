@@ -5,6 +5,7 @@ import com.zkdas.oop.service.limitedStrinds.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Customer {
     /**
@@ -101,10 +102,17 @@ public class Customer {
     }
 
     public Order createOrder() {
-        Order order = new Order(this);
+        Order order;
+        // выберем тип заказа (приоритетный или обычный)
+        if (_isPriority) {
+            order = new PriorityOrder(this, new Date(), PriorityOrderTime.Mode0);
+        } else {
+            order = new Order(this);
+        }
         _orders.add(order);
         return order;
     }
+
     public ArrayList<Order> get_orders() {
         return _orders;
     }

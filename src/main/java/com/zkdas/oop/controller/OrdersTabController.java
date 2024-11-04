@@ -1,9 +1,7 @@
 package com.zkdas.oop.controller;
 
 import com.zkdas.oop.controller.modelForController.ItemForList;
-import com.zkdas.oop.model.Order;
-import com.zkdas.oop.model.OrderStatus;
-import com.zkdas.oop.model.Store;
+import com.zkdas.oop.model.*;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,12 +23,18 @@ public class OrdersTabController {
     @FXML
     private ChoiceBox<OrderStatus> StatusChoiceBox;
     @FXML
+    protected ChoiceBox<PriorityOrderTime> deliveryTime_ChoiceBox;
+    @FXML
     protected ListView<ItemForList> cart_listView;
     @FXML
     private TableView<Order> order_tableView;
     @FXML
+    private GridPane PriorityOptionsPlane;
+    @FXML
     private GridPane addressPane;
     private AddressController addressController;
+
+    private Order sealedOrder;
 
     /**
      * Инициализация таблицы
@@ -76,13 +80,36 @@ public class OrdersTabController {
         });
     }
 
+    protected void deliveryTimeEventHandler(){
+        // установка обработчика на выбор категории в выпадавшем списке
+        deliveryTime_ChoiceBox.addEventHandler(ActionEvent.ACTION, event -> {
+            if (sealedOrder != null && sealedOrder.getClass() == PriorityOrder.class) {
+                // установка в ордере значения время доставки
+                PriorityOrder order = (PriorityOrder)sealedOrder;
+                order.setDesiredDeliveryTime(deliveryTime_ChoiceBox.getValue());
+            }
+        });
+    }
+
+    /**
+     * Установит видимость объектов для приоритетного заказа
+     * @param visible видимость true/false
+     */
+    protected void setVisible(boolean visible) {
+        PriorityOptionsPlane.setVisible(visible);
+    }
+
     public void initialize() throws IOException {
         // установка выборов в ChoiceBox
         StatusChoiceBox.getItems().addAll(OrderStatus.values());
 
+        deliveryTime_ChoiceBox.getItems().addAll(PriorityOrderTime.values());
+
+
         // Инициализация таблицы
         tableInitialize();
-
+        // обработчик ивента на deliveryTime_ChoiceBox
+        deliveryTimeEventHandler();
         // загрузка виджета
         // указания пути к fxml файлу
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/AddressControl.fxml"));
@@ -90,6 +117,8 @@ public class OrdersTabController {
         addressController = loader.getController(); // присвоение контролера
         // вставка subview
         addressPane.getChildren().add(subview);
+
+        setVisible(false);
     }
 
     /**
@@ -97,10 +126,20 @@ public class OrdersTabController {
      * @param selectedOrder выбранный элемент
      */
     protected void orderTableViewAction(Order selectedOrder) {
+        this.sealedOrder = selectedOrder; // установка выбранного
+
         addressController.SetAddress(selectedOrder.getAddress()); // установка адреса
         IdField.setText(String.valueOf(selectedOrder.getId())); // установка id
         CreatedField.setText(String.valueOf(selectedOrder.getDate())); // установка даты
         StatusChoiceBox.getSelectionModel().select(selectedOrder.getOrderStatus()); // установка статуса заказа
+
+        boolean is_priority = selectedOrder.getClass() == PriorityOrder.class;
+        if (is_priority){
+            deliveryTime_ChoiceBox.getSelectionModel().select(((PriorityOrder) selectedOrder).getDesiredDeliveryTime());
+        }
+
+        // установка видимости
+        setVisible(is_priority);
 
         // установка списка заказов
         // cart_listView.getItems().clear(); // отчистка старого списка
@@ -110,7 +149,6 @@ public class OrdersTabController {
 
         AmountLabel.setText(String.valueOf(selectedOrder.getPrise())); // установка цены
     }
-
 
 
     @FXML

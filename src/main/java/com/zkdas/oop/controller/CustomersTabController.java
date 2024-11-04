@@ -77,6 +77,14 @@ public class CustomersTabController {
                 id_field.setText(String.valueOf(selectedItem.getId()));
                 ful_name_field.setText(selectedItem.getFulname());
                 addressController.SetAddress(selectedItem.getAddress());
+                isPriority.setSelected(selectedItem.is_Priority());
+            }
+        });
+
+        isPriority.setOnAction(event -> {
+            CustomerForList selectedItem = customers_listView.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                selectedItem.set_isPriority(isPriority.isSelected());
             }
         });
     }

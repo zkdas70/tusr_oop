@@ -17,20 +17,14 @@ import static com.zkdas.oop.service.EnumUtils.getRandomEnum;
 
 public class PriorityOrdersTabController extends OrdersTabController {
     private PriorityOrder _order; // надо удалять и создавать новый при отчистке корзины
-    @FXML
-    private ChoiceBox<PriorityOrderTime> deliveryTime_ChoiceBox;
 
     @Override
-    protected void tableInitialize() {
-    }
+    protected void tableInitialize() {}
+    @Override
+    protected void setVisible(boolean visible) {}
 
     @Override
-    public void initialize() throws IOException {
-        super.initialize();
-        deliveryTime_ChoiceBox.getItems().addAll(PriorityOrderTime.values());
-
-        clear_btn_click();
-
+    protected void deliveryTimeEventHandler(){
         // установка обработчика на выбор категории в выпадавшем списке
         deliveryTime_ChoiceBox.addEventHandler(ActionEvent.ACTION, event -> {
             if (_order != null) {
@@ -38,6 +32,13 @@ public class PriorityOrdersTabController extends OrdersTabController {
                 _order.setDesiredDeliveryTime(deliveryTime_ChoiceBox.getValue());
             }
         });
+    }
+
+    @Override
+    public void initialize() throws IOException {
+        super.initialize();
+
+        clear_btn_click();
     }
 
     @FXML
@@ -77,6 +78,11 @@ public class PriorityOrdersTabController extends OrdersTabController {
         Random rand = new Random();
 
         Store store = new Store();
+
+        if (store.getItems().isEmpty()){
+            return;
+        }
+
         _order.getItems().add(store.getItems().get(rand.nextInt(store.getItems().size())));
 
         AmountLabel.setText(String.valueOf(_order.getPrise())); // установка цены
