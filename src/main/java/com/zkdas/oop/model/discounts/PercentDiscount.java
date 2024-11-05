@@ -1,23 +1,22 @@
 package com.zkdas.oop.model.discounts;
 
+import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
 
 import java.util.List;
 
-public class PointsDiscount implements IDiscount{
-    public static final double MAX_DISCOUNT = 0.30;
-    public static final double  POINTS_CONVERSION = 0.10;
-
-    private int points = 0;
+public class PercentDiscount implements IDiscount{
+    private Category category;
+    private int percent;
 
     /**
      * Базовый метод: возвращает описательную строку скидки
      *
-     * @return описательная строка скидки («Накопительная – {Баллы} баллов»)
+     * @return описательная строка скидки (пример «процентная «{Категория}» - {Процент}%»)
      */
     @Override
     public String getInfo() {
-        return "Накопительная - %s баллов".formatted(points);
+        return "процентная «%b» - %b%%".formatted(category.toString(), percent);
     }
 
     /**
@@ -28,11 +27,14 @@ public class PointsDiscount implements IDiscount{
      */
     @Override
     public <I extends Item, T extends List<I>> double Calculate(T items) {
-        double prise = 0;
+        double price = 0;
         for (I item : items) {
-            prise += item.getCost();
+            if (item.getCategory() == category) {
+                price += item.getCost();
+            }
         }
-        return Math.min(points, Math.floor(MAX_DISCOUNT * prise));
+
+        return price * ((double) percent / 100);
     }
 
     /**
@@ -44,10 +46,10 @@ public class PointsDiscount implements IDiscount{
      */
     @Override
     public <I extends Item, T extends List<I>> double Apply(T items) {
-        double points = Calculate(items);
-        this.points -= (int) points;
+        double discount = Calculate(items);
+        percent = 1;
         Update(items);
-        return points;
+        return discount;
     }
 
     /**
@@ -57,8 +59,13 @@ public class PointsDiscount implements IDiscount{
      */
     @Override
     public <I extends Item, T extends List<I>> void Update(T items) {
-        for (I item : items) {
-            points += (int) Math.ceil(item.getCost() * POINTS_CONVERSION);
+        double prise = 0;
+        for (I item: items){
+            prise += item.getCost();
+        }
+        percent += (int) prise % 1_000;
+        if (percent > 10){
+            percent = 10;
         }
     }
 }

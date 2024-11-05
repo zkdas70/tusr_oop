@@ -18,7 +18,7 @@ public interface IDiscount {
      * @param <I> наследник Item
      * @param <T> любой список
      */
-    public <I extends Item, T extends List<I>> double calculate(T items);
+    public <I extends Item, T extends List<I>> double Calculate(T items);
 
     /**
      * Базовый метод: применяет скидку к товарам
