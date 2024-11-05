@@ -31,15 +31,12 @@ public class MainWindowController {
     private CustomersTabController CustomersTabController;
     private CartsTabController CartsTabController;
     private OrdersTabController OrdersTabController;
-    private PriorityOrdersTabController PriorityOrdersTabController;
 
     public void initialize() throws IOException {
         loadItemsTab();
         loadCustomersTab();
         loadCartsTab();
         loadOrdersTab();
-
-        loadPriorityOrdersTab();
     }
 
 
@@ -86,22 +83,6 @@ public class MainWindowController {
         // получаю ссылку на контролер, который был связан с загруженным FXML-файлом.
         OrdersTabController = loader.getController();
     }
-
-    private void loadPriorityOrdersTab() throws IOException {
-        // указания пути к fxml файлу
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/PriorityOrderTab.fxml"));
-        Parent subview = loader.load();// загрузка данных из файла
-
-        Tab containerTab = new Tab();
-        containerTab.setText("Priority Order");
-        // вставка subview во вкладку
-        containerTab.setContent(subview);
-        // вставка вкладки
-        mainTabPlate.getTabs().add(containerTab);
-        // получаю ссылку на контролер, который был связан с загруженным FXML-файлом.
-        PriorityOrdersTabController = loader.getController();
-    }
-
 
     @FXML
     private void menuGenerateElementClick(ActionEvent actionEvent) throws Exception {

@@ -125,7 +125,7 @@ public class OrdersTabController {
      * Обработчик выбора элемента в таблице
      * @param selectedOrder выбранный элемент
      */
-    protected void orderTableViewAction(Order selectedOrder) {
+    protected <T extends Order> void orderTableViewAction(T selectedOrder) {
         this.sealedOrder = selectedOrder; // установка выбранного
 
         addressController.SetAddress(selectedOrder.getAddress()); // установка адреса
