@@ -1,4 +1,4 @@
-package com.zkdas.oop.model;
+package com.zkdas.oop.model.Item;
 
 public enum Category {
     /**

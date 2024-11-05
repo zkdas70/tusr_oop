@@ -1,5 +1,8 @@
-package com.zkdas.oop.model;
+package com.zkdas.oop.model.Customer;
 
+import com.zkdas.oop.model.Order.Order;
+import com.zkdas.oop.model.Order.PriorityOrder;
+import com.zkdas.oop.model.Order.PriorityOrderTime;
 import com.zkdas.oop.service.IdGenerator;
 import com.zkdas.oop.service.limitedStrinds.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;

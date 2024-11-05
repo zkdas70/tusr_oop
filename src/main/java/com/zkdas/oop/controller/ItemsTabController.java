@@ -1,15 +1,14 @@
 package com.zkdas.oop.controller;
 
 import com.zkdas.oop.controller.modelForController.ItemForList;
-import com.zkdas.oop.model.Category;
-import com.zkdas.oop.model.Item;
+import com.zkdas.oop.model.Item.Category;
+import com.zkdas.oop.model.Item.Item;
 import com.zkdas.oop.model.Store;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
 
 import java.util.ArrayList;
 

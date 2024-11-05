@@ -1,7 +1,7 @@
 package com.zkdas.oop.controller.modelForController;
 
-import com.zkdas.oop.model.Address;
-import com.zkdas.oop.model.Customer;
+import com.zkdas.oop.model.Customer.Address;
+import com.zkdas.oop.model.Customer.Customer;
 
 public class CustomerForList extends Customer {
     /**

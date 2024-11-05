@@ -1,4 +1,6 @@
-package com.zkdas.oop.model;
+package com.zkdas.oop.model.discounts;
+
+import com.zkdas.oop.model.Item.Item;
 
 import java.util.List;
 

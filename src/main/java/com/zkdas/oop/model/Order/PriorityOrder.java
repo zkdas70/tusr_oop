@@ -1,4 +1,6 @@
-package com.zkdas.oop.model;
+package com.zkdas.oop.model.Order;
+
+import com.zkdas.oop.model.Customer.Customer;
 
 import java.util.Date;
 

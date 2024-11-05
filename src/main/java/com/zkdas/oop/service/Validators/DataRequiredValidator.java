@@ -1,11 +1,6 @@
 package com.zkdas.oop.service.Validators;
 
-import com.zkdas.oop.model.Address;
 import javafx.scene.control.TextInputControl;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Map;
 
 /// класс считающий сработавшие валидаторы
 public class DataRequiredValidator {

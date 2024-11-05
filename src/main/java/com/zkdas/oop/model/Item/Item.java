@@ -1,4 +1,4 @@
-package com.zkdas.oop.model;
+package com.zkdas.oop.model.Item;
 
 import com.zkdas.oop.service.IdGenerator;
 import com.zkdas.oop.service.limitedStrinds.LimitedFloat;

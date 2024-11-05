@@ -1,7 +1,7 @@
 package com.zkdas.oop.controller.modelForController;
 
-import com.zkdas.oop.model.Category;
-import com.zkdas.oop.model.Item;
+import com.zkdas.oop.model.Item.Category;
+import com.zkdas.oop.model.Item.Item;
 
 public class ItemForList extends Item {
     /**

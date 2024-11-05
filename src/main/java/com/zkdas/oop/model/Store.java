@@ -2,6 +2,7 @@ package com.zkdas.oop.model;
 
 import com.zkdas.oop.controller.modelForController.CustomerForList;
 import com.zkdas.oop.controller.modelForController.ItemForList;
+import com.zkdas.oop.model.Order.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

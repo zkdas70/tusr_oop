@@ -1,11 +1,10 @@
 package com.zkdas.oop.controller;
 
 import com.zkdas.oop.controller.modelForController.CustomerForList;
-import com.zkdas.oop.model.Address;
-import com.zkdas.oop.model.Customer;
+import com.zkdas.oop.model.Customer.Address;
+import com.zkdas.oop.model.Customer.Customer;
 import com.zkdas.oop.model.Store;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

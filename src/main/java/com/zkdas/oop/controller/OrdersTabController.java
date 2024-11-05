@@ -2,6 +2,10 @@ package com.zkdas.oop.controller;
 
 import com.zkdas.oop.controller.modelForController.ItemForList;
 import com.zkdas.oop.model.*;
+import com.zkdas.oop.model.Order.Order;
+import com.zkdas.oop.model.Order.OrderStatus;
+import com.zkdas.oop.model.Order.PriorityOrder;
+import com.zkdas.oop.model.Order.PriorityOrderTime;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

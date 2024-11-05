@@ -1,7 +1,7 @@
 package com.zkdas.oop.service.dataFactory;
 
-import com.zkdas.oop.model.Address;
-import com.zkdas.oop.model.Customer;
+import com.zkdas.oop.model.Customer.Address;
+import com.zkdas.oop.model.Customer.Customer;
 import net.datafaker.Faker;
 
 import java.util.Locale;

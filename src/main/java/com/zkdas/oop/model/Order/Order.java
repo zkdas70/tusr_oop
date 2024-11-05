@@ -1,6 +1,8 @@
-package com.zkdas.oop.model;
+package com.zkdas.oop.model.Order;
 
 import com.zkdas.oop.controller.modelForController.ItemForList;
+import com.zkdas.oop.model.Customer.Address;
+import com.zkdas.oop.model.Customer.Customer;
 import com.zkdas.oop.service.IdGenerator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

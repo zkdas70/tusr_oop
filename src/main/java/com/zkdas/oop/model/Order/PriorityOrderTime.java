@@ -1,4 +1,4 @@
-package com.zkdas.oop.model;
+package com.zkdas.oop.model.Order;
 
 public enum PriorityOrderTime {
     /**

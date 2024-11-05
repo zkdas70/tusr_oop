@@ -1,4 +1,4 @@
-package com.zkdas.oop.model;
+package com.zkdas.oop.model.Customer;
 
 import com.zkdas.oop.controller.modelForController.ItemForList;
 import javafx.collections.FXCollections;

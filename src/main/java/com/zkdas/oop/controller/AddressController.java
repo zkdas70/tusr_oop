@@ -1,12 +1,9 @@
 package com.zkdas.oop.controller;
 
-import com.zkdas.oop.model.Address;
+import com.zkdas.oop.model.Customer.Address;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddressController {
     /**

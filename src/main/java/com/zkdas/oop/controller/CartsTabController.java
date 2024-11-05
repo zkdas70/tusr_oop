@@ -2,7 +2,6 @@ package com.zkdas.oop.controller;
 
 import com.zkdas.oop.controller.modelForController.CustomerForList;
 import com.zkdas.oop.controller.modelForController.ItemForList;
-import com.zkdas.oop.model.Order;
 import com.zkdas.oop.model.Store;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
