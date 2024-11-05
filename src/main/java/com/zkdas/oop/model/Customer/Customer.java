@@ -114,7 +114,12 @@ public class Customer {
         this._isPriority = _isPriority;
     }
 
-    public Order createOrder() {
+    /**
+     * Создаст заказ
+     * @param discount скидка
+     * @return Order созданный заказ
+     */
+    public Order createOrder(double discount) {
         Order order;
         // выберем тип заказа (приоритетный или обычный)
         if (_isPriority) {
@@ -122,8 +127,24 @@ public class Customer {
         } else {
             order = new Order(this);
         }
+        // вычитаю скидку из стоимости заказа
+        order.setPrise(order.getPrise() - discount);
+
         _orders.add(order);
+
+//        for (IDiscount i: _discounts) {
+//            i.Update(_cart.getItems());
+//        }
+
         return order;
+    }
+
+    /**
+     * Создаст заказ (скидка равна 0)
+     * @return Order созданный заказ
+     */
+    public Order createOrder(){
+        return createOrder(0);
     }
 
     public ArrayList<Order> get_orders() {
