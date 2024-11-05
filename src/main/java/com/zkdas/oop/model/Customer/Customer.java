@@ -3,9 +3,14 @@ package com.zkdas.oop.model.Customer;
 import com.zkdas.oop.model.Order.Order;
 import com.zkdas.oop.model.Order.PriorityOrder;
 import com.zkdas.oop.model.Order.PriorityOrderTime;
+import com.zkdas.oop.model.discounts.IDiscount;
+import com.zkdas.oop.model.discounts.PercentDiscount;
+import com.zkdas.oop.model.discounts.PointsDiscount;
 import com.zkdas.oop.service.IdGenerator;
 import com.zkdas.oop.service.limitedStrinds.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +25,8 @@ public class Customer {
     private Address _address; // Address покупателя
     private final Cart _cart; // корзина покупателя
     private ArrayList<Order> _orders = new ArrayList<>(); // все заказы покупателя (в виде ссылок)
-    private boolean _isPriority;
+    private boolean _isPriority; // приоритетный ли покупатель
+    private ObservableList<IDiscount> _discounts; // все скидки пользователя
 
     /**
      * Конструктор Customer
@@ -35,6 +41,9 @@ public class Customer {
         _address = address.clone(); // созданная копия это уже не агрегация, а композиция
         _cart = new Cart();
         _isPriority = isPriority;
+
+        _discounts = FXCollections.observableArrayList();
+        _discounts.add(new PointsDiscount());
     }
 
     /**
@@ -60,6 +69,7 @@ public class Customer {
         setFulname(customer.getFulname());
         setAddress(customer.getAddress());
         _cart = customer.get_cart().clone();
+        _discounts = FXCollections.observableArrayList(customer.get_discounts());
     }
 
     /**
@@ -122,5 +132,9 @@ public class Customer {
 
     public void set_orders(ArrayList<Order> _orders) {
         this._orders = _orders;
+    }
+
+    public ObservableList<IDiscount> get_discounts() {
+        return _discounts;
     }
 }

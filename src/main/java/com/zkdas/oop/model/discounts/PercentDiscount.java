@@ -9,6 +9,11 @@ public class PercentDiscount implements IDiscount{
     private Category category;
     private int percent;
 
+    public PercentDiscount(Category category) {
+        this.category = category;
+        this.percent = 1;
+    }
+
     /**
      * Базовый метод: возвращает описательную строку скидки
      *
@@ -16,7 +21,7 @@ public class PercentDiscount implements IDiscount{
      */
     @Override
     public String getInfo() {
-        return "процентная «%b» - %b%%".formatted(category.toString(), percent);
+        return "процентная «%s» - %s%%".formatted(category.toString(), percent);
     }
 
     /**
