@@ -6,7 +6,9 @@ import com.zkdas.oop.model.Item.Item;
 import java.util.List;
 
 public class PercentDiscount implements IDiscount{
-    private Category category;
+    public static double PERCENT_DISCOUNT = 0;
+
+    private final Category category;
     private int percent;
 
     public PercentDiscount(Category category) {
@@ -66,9 +68,11 @@ public class PercentDiscount implements IDiscount{
     public <I extends Item, T extends List<I>> void Update(T items) {
         double prise = 0;
         for (I item: items){
-            prise += item.getCost();
+            if (item.getCategory() == category) {
+                prise += item.getCost();
+            }
         }
-        percent += (int) prise % 1_000;
+        percent += (int) Math.floor(prise / 1_000);
         if (percent > 10){
             percent = 10;
         }
