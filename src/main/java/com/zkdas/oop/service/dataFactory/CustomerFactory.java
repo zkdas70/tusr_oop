@@ -7,6 +7,20 @@ import net.datafaker.Faker;
 import java.util.Locale;
 
 public class CustomerFactory {
+    public static Address createAddress() throws Exception {
+        Faker faker = new Faker(new Locale("ru"));
+        // генерация адреса
+        Address address = new Address();
+
+        address.setPostIndex(faker.address().postcode());
+        address.setCountry(faker.address().country());
+        address.setCity(faker.address().city());
+        address.setStreet(faker.address().streetName());
+        address.setBuilding(faker.address().buildingNumber());
+        address.setApartment(faker.address().streetAddressNumber());
+        return address;
+    }
+
     /**
      * Сгенерирует новый подходящего для тестов Customer
      */
@@ -17,17 +31,6 @@ public class CustomerFactory {
         // Генерация случайного человека
         String fulname = faker.name().fullName();
 
-        // генерация адреса
-        Address address = new Address();
-
-        address.setPostIndex(faker.address().postcode());
-        address.setCountry(faker.address().country());
-        address.setCity(faker.address().city());
-        address.setStreet(faker.address().streetName());
-        address.setBuilding(faker.address().buildingNumber());
-        address.setApartment(faker.address().streetAddressNumber());
-
-
-        return new Customer(fulname, address);
+        return new Customer(fulname, createAddress());
     }
 }

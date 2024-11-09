@@ -5,7 +5,7 @@ import com.zkdas.oop.service.limitedStrinds.LimitedFloat;
 import com.zkdas.oop.service.limitedStrinds.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
 
-public class Item {
+public class Item implements Cloneable{
     /**
      * Класс модель данных Item
      */
@@ -15,6 +15,22 @@ public class Item {
     private final LimitedSting _info = new LimitedSting(1_000); // строковое поле с описанием товара, до 1 000 символов.
     private final LimitedFloat _cost = new LimitedFloat(0, 100_000); // вещественное поле со стоимостью товара, от 0 до 100 000
     private Category _category;
+
+    @Override
+    public Item clone() {
+        try {
+            return  new Item(this);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Item other) {
+            return other.getCost() == getCost();
+        }
+        return false;
+    }
 
     /**
      * конструктор Item

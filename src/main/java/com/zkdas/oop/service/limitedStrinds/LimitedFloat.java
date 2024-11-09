@@ -1,5 +1,7 @@
 package com.zkdas.oop.service.limitedStrinds;
 
+import java.util.Objects;
+
 public class LimitedFloat implements Cloneable {
     /**
      * Класс лимитированной по длине Float числа
@@ -10,13 +12,20 @@ public class LimitedFloat implements Cloneable {
     private float _vale;
 
     @Override
-    public LimitedSting clone(){
+    public LimitedFloat clone(){
         try {
-            LimitedSting clone = (LimitedSting) super.clone();
-            return clone;
+            return (LimitedFloat) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof LimitedFloat other) {
+            return Objects.equals(other.getValue(), _vale);
+        }
+        return false;
     }
 
     /**

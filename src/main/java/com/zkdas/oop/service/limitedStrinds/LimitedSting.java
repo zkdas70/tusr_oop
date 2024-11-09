@@ -1,18 +1,37 @@
 package com.zkdas.oop.service.limitedStrinds;
 
 
-public class LimitedSting {
+import java.util.Objects;
+
+public class LimitedSting implements Cloneable {
     /**
      * Класс лимитированной по длине строки
      */
-    private int _length;
+    private final int _length;
     private String _data;
+
+    @Override
+    public LimitedSting clone() {
+        try {
+            return  (LimitedSting) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof LimitedSting) {
+            return Objects.equals(obj.toString(), _data);
+        }
+        return false;
+    }
 
     /**
      * конструктор LimitedSting
      * @param length максимальная длина строки
      */
-    public LimitedSting(int length) throws Exception {
+    public LimitedSting(int length) {
         _length = length;
     }
 

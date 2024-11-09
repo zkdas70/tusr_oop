@@ -1,6 +1,8 @@
 package com.zkdas.oop.service.limitedStrinds;
 
-public class PostIndex {
+import java.util.Objects;
+
+public class PostIndex implements Cloneable {
     /**
      * Класс для хранения почтово индекса
      */
@@ -35,4 +37,23 @@ public class PostIndex {
         return String.valueOf(postIndex);
     }
 
+    @Override
+    public PostIndex clone() {
+        try {
+            return (PostIndex) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    /**
+     * Сравнение
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof PostIndex) {
+            return Objects.equals(obj.toString(), postIndex);
+        }
+        return false;
+    }
 }

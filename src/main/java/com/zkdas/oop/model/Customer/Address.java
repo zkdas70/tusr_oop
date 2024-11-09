@@ -17,10 +17,18 @@ public class Address implements Cloneable {
     @Override
     public Address clone() {
         try {
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
-            return (Address) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
+            Address clone = new Address();
+
+            clone.setPostIndex(getPostIndex());
+            clone.setCountry(getCountry());
+            clone.setCity(getCity());
+            clone.setStreet(getStreet());
+            clone.setBuilding(getBuilding());
+            clone.setApartment(getApartment());
+
+            return clone;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

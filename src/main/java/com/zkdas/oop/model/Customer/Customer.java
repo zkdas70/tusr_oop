@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Customer {
+public class Customer implements Cloneable{
     /**
      * Класс модель данных Customer
      */
@@ -27,6 +27,23 @@ public class Customer {
     private ArrayList<Order> _orders = new ArrayList<>(); // все заказы покупателя (в виде ссылок)
     private boolean _isPriority; // приоритетный ли покупатель
     private ObservableList<IDiscount> _discounts; // все скидки пользователя
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Customer other) {
+            return _id == other._id;
+        }
+        return false;
+    }
+
+    @Override
+    public Customer clone() {
+        try {
+            return new Customer(this);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Конструктор Customer
