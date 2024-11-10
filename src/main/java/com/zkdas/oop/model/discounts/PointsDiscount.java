@@ -1,10 +1,11 @@
 package com.zkdas.oop.model.discounts;
 
 import com.zkdas.oop.model.Item.Item;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class PointsDiscount implements IDiscount{
+public class PointsDiscount implements IDiscount, Comparable<PointsDiscount>{
     public static final double MAX_DISCOUNT = 0.30;
     public static final double  POINTS_CONVERSION = 0.10;
 
@@ -60,5 +61,10 @@ public class PointsDiscount implements IDiscount{
         for (I item : items) {
             points += (int) Math.ceil(item.getCost() * POINTS_CONVERSION);
         }
+    }
+
+    @Override
+    public int compareTo(@NotNull PointsDiscount obj) {
+        return Integer.compare(this.points, obj.points);
     }
 }

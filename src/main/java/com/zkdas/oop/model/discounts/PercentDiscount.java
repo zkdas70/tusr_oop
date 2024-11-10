@@ -2,10 +2,16 @@ package com.zkdas.oop.model.discounts;
 
 import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class PercentDiscount implements IDiscount{
+public class PercentDiscount implements IDiscount, Comparable<PercentDiscount>{
+    @Override
+    public int compareTo(@NotNull PercentDiscount obj) {
+        return Integer.compare(this.percent, obj.percent);
+    }
+
     public static double PERCENT_DISCOUNT = 0;
 
     private final Category category;

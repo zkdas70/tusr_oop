@@ -2,6 +2,7 @@ module com.zkdas.oop {
     requires javafx.controls;
     requires javafx.fxml;
     requires net.datafaker;
+    requires org.jetbrains.annotations;
 
 
     opens com.zkdas.oop to javafx.fxml;

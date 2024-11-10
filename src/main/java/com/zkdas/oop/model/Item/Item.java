@@ -1,11 +1,13 @@
 package com.zkdas.oop.model.Item;
 
+import com.zkdas.oop.model.discounts.PointsDiscount;
 import com.zkdas.oop.service.IdGenerator;
 import com.zkdas.oop.service.LimitedFields.LimitedFloat;
 import com.zkdas.oop.service.LimitedFields.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
+import org.jetbrains.annotations.NotNull;
 
-public class Item implements Cloneable {
+public class Item implements Cloneable, Comparable<Item> {
     /**
      * Класс модель данных Item
      */
@@ -15,6 +17,11 @@ public class Item implements Cloneable {
     private final LimitedSting _info = new LimitedSting(1_000); // строковое поле с описанием товара, до 1 000 символов.
     private final LimitedFloat _cost = new LimitedFloat(0, 100_000); // вещественное поле со стоимостью товара, от 0 до 100 000
     private Category _category;
+
+    @Override
+    public int compareTo(@NotNull Item obj) {
+        return Float.compare(this.getCost(), obj.getCost());
+    }
 
     @Override
     public Item clone() {
