@@ -1,4 +1,4 @@
-package com.zkdas.oop.service.limitedStrinds;
+package com.zkdas.oop.service.LimitedFields;
 
 import java.util.Objects;
 

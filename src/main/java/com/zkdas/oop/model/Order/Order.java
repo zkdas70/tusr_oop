@@ -22,6 +22,17 @@ public class Order {
     private ObservableList<ItemForList> _items; // веши что заказали
     private OrderStatus _orderStatus;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Order other) {
+            // наверное _date нельзя сравнивать (не будет смысла)
+            return other._address.equals(this._address) && other._name.equals(this._name)
+                    && other._prise == this._prise && other._items.equals(this._items)
+                    && other._orderStatus == this._orderStatus;
+        }
+        return false;
+    }
+
     public Order(Customer customer) {
         _id = _idGenerator.get_next_id();
 

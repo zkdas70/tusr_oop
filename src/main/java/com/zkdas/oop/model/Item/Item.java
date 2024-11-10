@@ -1,11 +1,11 @@
 package com.zkdas.oop.model.Item;
 
 import com.zkdas.oop.service.IdGenerator;
-import com.zkdas.oop.service.limitedStrinds.LimitedFloat;
-import com.zkdas.oop.service.limitedStrinds.LimitedSting;
+import com.zkdas.oop.service.LimitedFields.LimitedFloat;
+import com.zkdas.oop.service.LimitedFields.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
 
-public class Item implements Cloneable{
+public class Item implements Cloneable {
     /**
      * Класс модель данных Item
      */
@@ -19,15 +19,17 @@ public class Item implements Cloneable{
     @Override
     public Item clone() {
         try {
-            return  new Item(this);
+            return new Item(this);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Item other) {
-            return other.getCost() == getCost();
+            return other.getName().equals(getName()) && other.getInfo().equals(getInfo())
+                    && other.getCost() == getCost() && other.getCategory() == getCategory();
         }
         return false;
     }
@@ -54,8 +56,8 @@ public class Item implements Cloneable{
      * @param item объект, что надо скопировать
      * @param copyId True скопирует id, False нет
      */
-    public Item(Item item,  boolean copyId) throws Exception {
-        if (copyId){
+    public Item(Item item, boolean copyId) throws Exception {
+        if (copyId) {
             _id = item._id;
         } else {
             _id = _idGenerator.get_next_id();
@@ -65,6 +67,7 @@ public class Item implements Cloneable{
         setCost(item.getCost());
         setCategory(item.getCategory());
     }
+
     /**
      * Копирующий конструктор Item, копирует id
      * @param item объект, что надо скопировать
@@ -109,6 +112,7 @@ public class Item implements Cloneable{
     public Category getCategory() {
         return _category;
     }
+
     public void setCategory(Category category) {
         _category = category;
     }

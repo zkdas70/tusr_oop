@@ -1,9 +1,12 @@
-package com.zkdas.oop.service.limitedStrinds;
+package com.zkdas.oop;
 
+import com.zkdas.oop.service.LimitedFields.LimitedFloat;
+import com.zkdas.oop.service.LimitedFields.LimitedSting;
 import com.zkdas.oop.model.Customer.Address;
 import com.zkdas.oop.model.Customer.Customer;
 import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
+import com.zkdas.oop.service.LimitedFields.PostIndex;
 import com.zkdas.oop.service.dataFactory.CustomerFactory;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +27,7 @@ class CloneTest {
 
         assertNotEquals(sample, clone);
     }
+
     @Test
     void testLimitedStingClone() throws Exception {
         LimitedSting sample = new LimitedSting(2);
@@ -94,7 +98,7 @@ class CloneTest {
 
         assertNotEquals(sample.getFulname(), clone.getFulname());
 
-        assertEquals(sample, clone);
+        assertNotEquals(sample, clone);
     }
     @Test
     void testAddressClone() throws Exception {

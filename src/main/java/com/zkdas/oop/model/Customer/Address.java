@@ -1,7 +1,7 @@
 package com.zkdas.oop.model.Customer;
 
-import com.zkdas.oop.service.limitedStrinds.LimitedSting;
-import com.zkdas.oop.service.limitedStrinds.PostIndex;
+import com.zkdas.oop.service.LimitedFields.LimitedSting;
+import com.zkdas.oop.service.LimitedFields.PostIndex;
 
 public class Address implements Cloneable {
     /**
@@ -13,6 +13,16 @@ public class Address implements Cloneable {
     private final LimitedSting _street = new LimitedSting(100); // улица, строка, не более 100 символов.
     private final LimitedSting _building = new LimitedSting(10);// номер дома, строка, не более 10 символов.
     private final LimitedSting _apartment = new LimitedSting(10);// номер квартиры/помещения, не более 10 символов.
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Address other) {
+            return other._index.equals(this._index) && other._country.equals(this._country)
+                    && other._city.equals(this._city) && other._street.equals(this._street)
+                    && other._building.equals(this._building) && other._apartment.equals(this._apartment);
+        }
+        return false;
+    }
 
     @Override
     public Address clone() {

@@ -4,10 +4,9 @@ import com.zkdas.oop.model.Order.Order;
 import com.zkdas.oop.model.Order.PriorityOrder;
 import com.zkdas.oop.model.Order.PriorityOrderTime;
 import com.zkdas.oop.model.discounts.IDiscount;
-import com.zkdas.oop.model.discounts.PercentDiscount;
 import com.zkdas.oop.model.discounts.PointsDiscount;
 import com.zkdas.oop.service.IdGenerator;
-import com.zkdas.oop.service.limitedStrinds.LimitedSting;
+import com.zkdas.oop.service.LimitedFields.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +30,9 @@ public class Customer implements Cloneable{
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Customer other) {
-            return _id == other._id;
+            return other._fulname.equals(this._fulname) && other._address.equals(this._address)
+                    && other._cart.equals(this._cart) && _isPriority == other._isPriority
+                    && other._orders.equals(this._orders) && other._discounts.equals(this._discounts);
         }
         return false;
     }

@@ -1,4 +1,4 @@
-package com.zkdas.oop.service.limitedStrinds;
+package com.zkdas.oop.service.LimitedFields;
 
 import java.util.Objects;
 
@@ -18,7 +18,7 @@ public class PostIndex implements Cloneable {
      * Конструктор PostIndex
      * @param postIndex int почтовый индекс
      */
-    PostIndex(String postIndex) throws Exception {
+    public PostIndex(String postIndex) throws Exception {
         setPostIndex(postIndex);
     }
 
