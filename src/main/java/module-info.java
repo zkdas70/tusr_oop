@@ -15,4 +15,8 @@ module com.zkdas.oop {
     opens com.zkdas.oop.service.LimitedFields to javafx.fxml;
     exports com.zkdas.oop.service.DataTools;
     opens com.zkdas.oop.service.DataTools to javafx.fxml;
+    exports com.zkdas.oop.service.DataTools.Filters;
+    opens com.zkdas.oop.service.DataTools.Filters to javafx.fxml;
+    exports com.zkdas.oop.service;
+    opens com.zkdas.oop.service to javafx.fxml;
 }

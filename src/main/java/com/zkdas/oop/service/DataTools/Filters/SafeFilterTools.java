@@ -1,11 +1,11 @@
-package com.zkdas.oop.service.DataTools;
+package com.zkdas.oop.service.DataTools.Filters;
 
 import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
 
 import java.util.List;
 
-public class SafeDataTools {
+public class SafeFilterTools {
     /**
      * Добавит ссылки на элементы, что прошли фильтр в список items_out
      * @param items_in список элементов для фильтрации

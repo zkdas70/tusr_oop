@@ -1,11 +1,11 @@
 package com.zkdas.oop.controller;
 
-import com.zkdas.oop.service.DataTools.Filter;
 import com.zkdas.oop.controller.modelForController.ItemForList;
 import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
 import com.zkdas.oop.model.Store;
-import com.zkdas.oop.service.DataTools.SafeDataTools;
+import com.zkdas.oop.service.DataTools.Filters.SafeFilterTools;
+import com.zkdas.oop.service.DataTools.Filters.Filter;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -87,21 +87,28 @@ public class ItemsTabController {
     }
 
     private void initializeFilters() {
+        Filter<ItemForList> FindFilter = (in_list) -> SafeFilterTools.name_filter(in_list,
+                FXCollections.observableArrayList(), FindTF.getText());
+        Filter<ItemForList> CostFilter = (in_list) -> SafeFilterTools.price_filter(in_list,
+                FXCollections.observableArrayList(), Double.parseDouble(CostTF.getText()));
+        Filter<ItemForList> CategoryFilter = (in_list) -> SafeFilterTools.category_filter(in_list,
+                FXCollections.observableArrayList(), CategoryChB.getValue());
 
         FindTF.addEventHandler(ActionEvent.ACTION, event -> {
             if (FindCB.isSelected()) {
-                Filter<ItemForList> filter = (in_list) -> SafeDataTools.name_filter(in_list, FXCollections.observableArrayList(), FindTF.getText());
-                filters.put("Find", filter);
+                filters.put("Find", FindFilter);
             }
             filter();
         });
         CostTF.addEventHandler(ActionEvent.ACTION, event -> {
             if (CostCB.isSelected()) {
-                Filter<ItemForList> filter = (in_list) -> SafeDataTools.price_filter(in_list, FXCollections.observableArrayList(),
-                        Double.parseDouble(CostTF.getText()));
-                filters.put("Cost", filter);
+                DataRequiredValidator validator = new DataRequiredValidator();
+                validator.validateDoubleField(CostTF);
+                if (!validator.IsNotErrors()) {
+                    return;
+                }
+                filters.put("Cost", CostFilter);
             }
-
             filter();
         });
 
@@ -112,38 +119,39 @@ public class ItemsTabController {
         // обработчик событий
         CategoryChB.addEventHandler(ActionEvent.ACTION, event -> {
             if (CategoryCB.isSelected()) {
-                Filter<ItemForList> filter = (in_list) -> SafeDataTools.category_filter(in_list, FXCollections.observableArrayList(), CategoryChB.getValue());
-                filters.put("Category", filter);
+                filters.put("Category", CategoryFilter);
             }
             filter();
         });
 
+        // обработчики чекбокс
         FindCB.addEventHandler(ActionEvent.ACTION, event -> {
             if (FindCB.isSelected()) {
-                Filter<ItemForList> filter = (in_list) -> SafeDataTools.name_filter(in_list, FXCollections.observableArrayList(), FindTF.getText());
-                filters.put("Find", filter);
-                return;
+                filters.put("Find", FindFilter);
+            } else {
+                filters.remove("Find");
             }
-            filters.remove("Find");
             filter();
         });
         CostCB.addEventHandler(ActionEvent.ACTION, event -> {
             if (CostCB.isSelected()) {
-                Filter<ItemForList> filter = (in_list) -> SafeDataTools.price_filter(in_list, FXCollections.observableArrayList(),
-                        Double.parseDouble(CostTF.getText()));
-                filters.put("Cost", filter);
-                return;
+                DataRequiredValidator validator = new DataRequiredValidator();
+                validator.validateDoubleField(CostTF);
+                if (!validator.IsNotErrors()) {
+                    return;
+                }
+                filters.put("Cost", CostFilter);
+            } else {
+                filters.remove("Cost");
             }
-            filters.remove("Cost");
             filter();
         });
         CategoryCB.addEventHandler(ActionEvent.ACTION, event -> {
             if (CategoryCB.isSelected()) {
-                Filter<ItemForList> filter = (in_list) -> SafeDataTools.category_filter(in_list, FXCollections.observableArrayList(), CategoryChB.getValue());
-                filters.put("Category", filter);
-                return;
+                filters.put("Category", CategoryFilter);
+            } else {
+                filters.remove("Category");
             }
-            filters.remove("Category");
             filter();
         });
     }
