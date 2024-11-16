@@ -1,6 +1,6 @@
 package com.zkdas.oop.controller;
 
-import com.zkdas.oop.controller.modelForController.Filter;
+import com.zkdas.oop.service.DataTools.Filter;
 import com.zkdas.oop.controller.modelForController.ItemForList;
 import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
@@ -16,10 +16,11 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Контролер виджета ItemsTab
+ */
 public class ItemsTabController {
-    /**
-     * Контролер виджета ItemsTab
-     */
+
     @FXML
     private ChoiceBox<Category> Category_field;
     // текстовые поля
