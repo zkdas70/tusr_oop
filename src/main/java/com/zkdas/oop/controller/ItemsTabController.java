@@ -6,7 +6,6 @@ import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
 import com.zkdas.oop.model.Store;
 import com.zkdas.oop.service.DataTools.SafeDataTools;
-import com.zkdas.oop.service.Events.FilterChangeEvent;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -49,14 +48,17 @@ public class ItemsTabController {
     @FXML
     private ListView<ItemForList> items_listView;
 
-    private int selected_index = -1; // -1 техническое значение (выбрано нечего)
+    private ItemForList selected_item = null; // -1 техническое значение (выбрано нечего)
 
     private ObservableList<ItemForList> items; // список элементов в ListView
 
-    private HashMap<String, Filter> filters = new HashMap<>(); // словарь активных фильтров
+    private HashMap<String, Filter<ItemForList>> filters = new HashMap<>(); // словарь активных фильтров
 
-    private Store store = new Store();
+    private final Store store = new Store();
 
+    /**
+     * Очистит поля в правой части
+     */
     private void clearFields() {
         id_field.setText("");
         cost_field.setText("");
@@ -64,13 +66,22 @@ public class ItemsTabController {
         description_field.setText("");
     }
 
-    private void filter(){
-        ObservableList<ItemForList> items = null;
+    /**
+     * Метод для фильтрации элементов в listView
+     */
+    private void filter() {
+        ObservableList<ItemForList> items = FXCollections.observableArrayList(this.items);
 
-        for (Filter f : filters.values()) {
-            items = (ObservableList<ItemForList>)f.get_list();
+        // применение фильтров
+        for (Filter<ItemForList> f : filters.values()) {
+            items = (ObservableList<ItemForList>) f.get_list(items);
         }
 
+        // сброс выбранного элемента
+        selected_item = null;
+        // отчистка полей
+        clearFields();
+        // установка отфильтрованных элементов в listView
         items_listView.setItems(items);
     }
 
@@ -78,14 +89,14 @@ public class ItemsTabController {
 
         FindTF.addEventHandler(ActionEvent.ACTION, event -> {
             if (FindCB.isSelected()) {
-                Filter filter = () -> SafeDataTools.name_filter(store.getItems(), FXCollections.<ItemForList>observableArrayList(), FindTF.getText());
+                Filter<ItemForList> filter = (in_list) -> SafeDataTools.name_filter(in_list, FXCollections.observableArrayList(), FindTF.getText());
                 filters.put("Find", filter);
             }
             filter();
         });
         CostTF.addEventHandler(ActionEvent.ACTION, event -> {
             if (CostCB.isSelected()) {
-                Filter filter = () -> SafeDataTools.price_filter(store.getItems(), FXCollections.observableArrayList(),
+                Filter<ItemForList> filter = (in_list) -> SafeDataTools.price_filter(in_list, FXCollections.observableArrayList(),
                         Double.parseDouble(CostTF.getText()));
                 filters.put("Cost", filter);
             }
@@ -100,7 +111,7 @@ public class ItemsTabController {
         // обработчик событий
         CategoryChB.addEventHandler(ActionEvent.ACTION, event -> {
             if (CategoryCB.isSelected()) {
-                Filter filter = () -> SafeDataTools.category_filter(store.getItems(), FXCollections.observableArrayList(), CategoryChB.getValue());
+                Filter<ItemForList> filter = (in_list) -> SafeDataTools.category_filter(in_list, FXCollections.observableArrayList(), CategoryChB.getValue());
                 filters.put("Category", filter);
             }
             filter();
@@ -108,7 +119,7 @@ public class ItemsTabController {
 
         FindCB.addEventHandler(ActionEvent.ACTION, event -> {
             if (FindCB.isSelected()) {
-                Filter filter = () -> SafeDataTools.name_filter(store.getItems(), FXCollections.observableArrayList(), FindTF.getText());
+                Filter<ItemForList> filter = (in_list) -> SafeDataTools.name_filter(in_list, FXCollections.observableArrayList(), FindTF.getText());
                 filters.put("Find", filter);
                 return;
             }
@@ -117,7 +128,7 @@ public class ItemsTabController {
         });
         CostCB.addEventHandler(ActionEvent.ACTION, event -> {
             if (CostCB.isSelected()) {
-                Filter filter = () -> SafeDataTools.price_filter(store.getItems(), FXCollections.observableArrayList(),
+                Filter<ItemForList> filter = (in_list) -> SafeDataTools.price_filter(in_list, FXCollections.observableArrayList(),
                         Double.parseDouble(CostTF.getText()));
                 filters.put("Cost", filter);
                 return;
@@ -127,7 +138,7 @@ public class ItemsTabController {
         });
         CategoryCB.addEventHandler(ActionEvent.ACTION, event -> {
             if (CategoryCB.isSelected()) {
-                Filter filter = () -> SafeDataTools.category_filter(store.getItems(), FXCollections.observableArrayList(), CategoryChB.getValue());
+                Filter<ItemForList> filter = (in_list) -> SafeDataTools.category_filter(in_list, FXCollections.observableArrayList(), CategoryChB.getValue());
                 filters.put("Category", filter);
                 return;
             }
@@ -159,7 +170,7 @@ public class ItemsTabController {
             ItemForList selectedItem = SelectionModel.getSelectedItem();
             if (selectedItem != null) {
                 // получение id выделенного элемента
-                selected_index = SelectionModel.getSelectedIndex();
+                selected_item = SelectionModel.getSelectedItem();
 
                 // задаем значения полям
                 id_field.setText(String.valueOf(selectedItem.getId()));
@@ -203,12 +214,11 @@ public class ItemsTabController {
     private void remove_btn_click(ActionEvent ignoredE) {
         // обработчик нажатия на кнопку remove
         // если выбрано поле
-        if (selected_index >= 0) {
-            items.remove(selected_index);
+        if (selected_item != null) {
+            items.remove(selected_item);
+
             clearFields();
-            selected_index = -1;
+            selected_item = null;
         }
-//        Store store = new Store();
-//        store.getCustomers().clear();
     }
 }

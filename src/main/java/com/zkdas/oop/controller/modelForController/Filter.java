@@ -1,10 +1,9 @@
 package com.zkdas.oop.controller.modelForController;
 
-import javafx.collections.ObservableList;
+import com.zkdas.oop.model.Item.Item;
 
 import java.util.List;
 
-
-public interface Filter {
-    List<ItemForList> get_list();
+public interface Filter <T extends Item> {
+      List<T> get_list(List<T> in_list);
 }
