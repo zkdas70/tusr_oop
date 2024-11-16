@@ -1,17 +1,21 @@
 package com.zkdas.oop.controller;
 
+import com.zkdas.oop.controller.modelForController.Filter;
 import com.zkdas.oop.controller.modelForController.ItemForList;
 import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
 import com.zkdas.oop.model.Store;
+import com.zkdas.oop.service.DataTools.SafeDataTools;
+import com.zkdas.oop.service.Events.FilterChangeEvent;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 public class ItemsTabController {
     /**
@@ -28,6 +32,19 @@ public class ItemsTabController {
     private TextArea name_field;
     @FXML
     private TextArea description_field;
+    @FXML
+    private TextField FindTF;
+    @FXML
+    private CheckBox FindCB;
+    @FXML
+    private TextField CostTF;
+    @FXML
+    private CheckBox CostCB;
+    @FXML
+    private ChoiceBox<Category> CategoryChB;
+    @FXML
+    private CheckBox CategoryCB;
+
     // ListView
     @FXML
     private ListView<ItemForList> items_listView;
@@ -36,6 +53,10 @@ public class ItemsTabController {
 
     private ObservableList<ItemForList> items; // список элементов в ListView
 
+    private HashMap<String, Filter> filters = new HashMap<>(); // словарь активных фильтров
+
+    private Store store = new Store();
+
     private void clearFields() {
         id_field.setText("");
         cost_field.setText("");
@@ -43,7 +64,80 @@ public class ItemsTabController {
         description_field.setText("");
     }
 
+    private void filter(){
+        ObservableList<ItemForList> items = null;
+
+        for (Filter f : filters.values()) {
+            items = (ObservableList<ItemForList>)f.get_list();
+        }
+
+        items_listView.setItems(items);
+    }
+
+    private void initializeFilters() {
+
+        FindTF.addEventHandler(ActionEvent.ACTION, event -> {
+            if (FindCB.isSelected()) {
+                Filter filter = () -> SafeDataTools.name_filter(store.getItems(), FXCollections.<ItemForList>observableArrayList(), FindTF.getText());
+                filters.put("Find", filter);
+            }
+            filter();
+        });
+        CostTF.addEventHandler(ActionEvent.ACTION, event -> {
+            if (CostCB.isSelected()) {
+                Filter filter = () -> SafeDataTools.price_filter(store.getItems(), FXCollections.observableArrayList(),
+                        Double.parseDouble(CostTF.getText()));
+                filters.put("Cost", filter);
+            }
+
+            filter();
+        });
+
+        // устанавливаю выбор значений
+        CategoryChB.getItems().addAll(Category.values());
+        // устанавливает выбор по умолчанию
+        CategoryChB.setValue(Category.NONE);
+        // обработчик событий
+        CategoryChB.addEventHandler(ActionEvent.ACTION, event -> {
+            if (CategoryCB.isSelected()) {
+                Filter filter = () -> SafeDataTools.category_filter(store.getItems(), FXCollections.observableArrayList(), CategoryChB.getValue());
+                filters.put("Category", filter);
+            }
+            filter();
+        });
+
+        FindCB.addEventHandler(ActionEvent.ACTION, event -> {
+            if (FindCB.isSelected()) {
+                Filter filter = () -> SafeDataTools.name_filter(store.getItems(), FXCollections.observableArrayList(), FindTF.getText());
+                filters.put("Find", filter);
+                return;
+            }
+            filters.remove("Find");
+            filter();
+        });
+        CostCB.addEventHandler(ActionEvent.ACTION, event -> {
+            if (CostCB.isSelected()) {
+                Filter filter = () -> SafeDataTools.price_filter(store.getItems(), FXCollections.observableArrayList(),
+                        Double.parseDouble(CostTF.getText()));
+                filters.put("Cost", filter);
+                return;
+            }
+            filters.remove("Cost");
+            filter();
+        });
+        CategoryCB.addEventHandler(ActionEvent.ACTION, event -> {
+            if (CategoryCB.isSelected()) {
+                Filter filter = () -> SafeDataTools.category_filter(store.getItems(), FXCollections.observableArrayList(), CategoryChB.getValue());
+                filters.put("Category", filter);
+                return;
+            }
+            filters.remove("Category");
+            filter();
+        });
+    }
+
     public void initialize() {
+        initializeFilters();
         // устанавливаю выбор значений
         Category_field.getItems().addAll(Category.values());
 
@@ -54,7 +148,6 @@ public class ItemsTabController {
         id_field.setEditable(false);
 
         // Инициализация списка ListView
-        Store store = new Store();
         items = store.getItems();
         items_listView.setItems(items);
 
