@@ -116,7 +116,7 @@
                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                   <children>
-                     <ChoiceBox maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
+                     <ChoiceBox fx:id="OrderChB" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" />
                      <Label text="Order by" />
                   </children>
                   <GridPane.margin>

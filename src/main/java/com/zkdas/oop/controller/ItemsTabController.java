@@ -4,17 +4,42 @@ import com.zkdas.oop.controller.modelForController.ItemForList;
 import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
 import com.zkdas.oop.model.Store;
+import com.zkdas.oop.service.DataTools.DataTools;
 import com.zkdas.oop.service.DataTools.Filters.SafeFilterTools;
 import com.zkdas.oop.service.DataTools.Filters.Filter;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+
+enum OrderCBOptions{
+    ID("id", (item1, item2) -> Integer.compare(item1.getId(), item2.getId())),
+    NAME("названию", (item1, item2) -> item1.getName().compareTo(item2.getName())),
+    COST("цене", (item1, item2) -> Double.compare(item1.getCost(), item2.getCost())),
+    CATEGORY("категории", (item1, item2) -> Integer.compare(item1.getCategory().ordinal(), item2.getCategory().ordinal()));
+    private String value;
+    private Comparator<Item> comparator;
+    OrderCBOptions(String value, Comparator<Item> comparator){
+        this.value = "Сортировка по " + value;
+        this.comparator = comparator;
+    }
+
+    public Comparator<Item> getComparator() {
+        return comparator;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+}
 
 /**
  * Контролер виджета ItemsTab
@@ -44,14 +69,14 @@ public class ItemsTabController {
     private ChoiceBox<Category> CategoryChB;
     @FXML
     private CheckBox CategoryCB;
+    @FXML
+    private ChoiceBox<OrderCBOptions> OrderChB;
 
     // ListView
     @FXML
     private ListView<ItemForList> items_listView;
 
     private ItemForList selected_item = null; // -1 техническое значение (выбрано нечего)
-
-    private ObservableList<ItemForList> items; // список элементов в ListView
 
     private HashMap<String, Filter<ItemForList>> filters = new HashMap<>(); // словарь активных фильтров
 
@@ -71,7 +96,7 @@ public class ItemsTabController {
      * Метод для фильтрации элементов в listView
      */
     private void filter() {
-        ObservableList<ItemForList> items = FXCollections.observableArrayList(this.items);
+        ObservableList<ItemForList> items = this.store.getItems();
 
         // применение фильтров
         for (Filter<ItemForList> f : filters.values()) {
@@ -156,6 +181,33 @@ public class ItemsTabController {
         });
     }
 
+    private void initializeSort(){
+        // список с выбором сортировки
+        OrderChB.getItems().addAll(OrderCBOptions.values());
+        OrderChB.setValue(OrderCBOptions.NAME);
+        OrderChB.setOnAction(event ->{
+            DataTools.Sort(items_listView.getItems(), OrderChB.getSelectionModel().getSelectedItem().getComparator());
+        });
+
+        store.getItems().addListener(new ListChangeListener<ItemForList>() {
+            /**
+             * Called after a change has been made to an ObservableList.
+             *
+             * @param c an object representing the change that was done
+             * @see Change
+             */
+            @Override
+            public void onChanged(Change<? extends ItemForList> c) {
+                c.next();
+                if (c.wasAdded() || c.wasRemoved()) {
+                    filter();
+                    DataTools.Sort(items_listView.getItems(), OrderChB.getSelectionModel().getSelectedItem().getComparator());
+                }
+            }
+
+        });
+    }
+
     public void initialize() {
         initializeFilters();
         // устанавливаю выбор значений
@@ -168,8 +220,7 @@ public class ItemsTabController {
         id_field.setEditable(false);
 
         // Инициализация списка ListView
-        items = store.getItems();
-        items_listView.setItems(items);
+        items_listView.setItems(store.getItems());
 
         // Обработчик клика
         items_listView.setOnMouseClicked(event -> {
@@ -190,14 +241,16 @@ public class ItemsTabController {
                 Category_field.setValue(selectedItem.getCategory());
             }
         });
+
+        initializeSort();
     }
 
     public ArrayList<ItemForList> getItems() {
-        return new ArrayList<>(items);
+        return new ArrayList<>(store.getItems());
     }
 
     public <T extends Item> void addItem(T item) throws Exception {
-        items.add(new ItemForList(item));
+        store.getItems().add(new ItemForList(item));
     }
 
     @FXML
@@ -213,7 +266,7 @@ public class ItemsTabController {
 
         // если все поля прошли валидацию
         if (validator.IsNotErrors()) {
-            items.add(new ItemForList(name_field.getText(), description_field.getText(),
+            store.getItems().add(new ItemForList(name_field.getText(), description_field.getText(),
                     Float.parseFloat(cost_field.getText()), Category_field.getValue()));
             clearFields();
         }
@@ -224,7 +277,7 @@ public class ItemsTabController {
         // обработчик нажатия на кнопку remove
         // если выбрано поле
         if (selected_item != null) {
-            items.remove(selected_item);
+            store.getItems().remove(selected_item);
 
             clearFields();
             selected_item = null;
