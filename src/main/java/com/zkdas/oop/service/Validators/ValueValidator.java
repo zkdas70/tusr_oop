@@ -1,8 +1,8 @@
 package com.zkdas.oop.service.Validators;
 
-/// <summary>
-///  валидатор проверки длины поля
-/// </summary>
+/**
+* Валидатор проверки длины поля
+*/
 public class ValueValidator {
     public static void AssertStringOnLength(String value, int maxLength, String propertyName) throws Exception {
         if (value.length() > maxLength) {

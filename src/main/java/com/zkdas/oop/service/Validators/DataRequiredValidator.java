@@ -2,7 +2,9 @@ package com.zkdas.oop.service.Validators;
 
 import javafx.scene.control.TextInputControl;
 
-/// класс считающий сработавшие валидаторы
+/**
+ * Класс считающий сработавшие валидаторы
+ */
 public class DataRequiredValidator {
     private int _errors_counter = 0;
 

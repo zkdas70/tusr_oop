@@ -1,11 +1,14 @@
 package com.zkdas.oop.model.Item;
 
-import com.zkdas.oop.model.discounts.PointsDiscount;
+import com.zkdas.oop.model.Item.Events.*;
 import com.zkdas.oop.service.IdGenerator;
 import com.zkdas.oop.service.LimitedFields.LimitedFloat;
 import com.zkdas.oop.service.LimitedFields.LimitedSting;
 import com.zkdas.oop.service.Validators.ValueValidator;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Item implements Cloneable, Comparable<Item> {
     /**
@@ -17,6 +20,48 @@ public class Item implements Cloneable, Comparable<Item> {
     private final LimitedSting _info = new LimitedSting(1_000); // строковое поле с описанием товара, до 1 000 символов.
     private final LimitedFloat _cost = new LimitedFloat(0, 100_000); // вещественное поле со стоимостью товара, от 0 до 100 000
     private Category _category;
+
+    // списки обработчиков событий
+    private List<IItemEventListener> NameChangedListeners = new ArrayList<>();
+    private List<IItemEventListener> InfoChangedListeners = new ArrayList<>();
+    private List<IItemEventListener> CostChangedListeners = new ArrayList<>();
+
+    /**
+     * Все поддерживаемые ивенты
+     */
+    public enum EventType{
+        NameChanged, InfoChanged, CostChanged;
+    }
+
+    /**
+     * Добавит слушатели для ивентов
+     * @param type тип ивента
+     * @param listener слушатель ивента
+     */
+    public void addEventListener(EventType type,IItemEventListener listener) {
+        switch (type) {
+            case NameChanged:
+                NameChangedListeners.add(listener);
+                break;
+            case InfoChanged:
+                InfoChangedListeners.add(listener);
+                break;
+            case CostChanged:
+                CostChangedListeners.add(listener);
+                break;
+        }
+    }
+
+    /**
+     * Сообщит всем обработчикам, что надо вызвать событие
+     * @param event событие
+     * @param listeners список событий
+     */
+    private void notifyListeners(ItemEvent event, List<IItemEventListener> listeners) {
+        for (IItemEventListener listener : listeners) {
+            listener.processEvent(event);
+        }
+    }
 
     @Override
     public int compareTo(@NotNull Item obj) {
@@ -95,6 +140,7 @@ public class Item implements Cloneable, Comparable<Item> {
         ValueValidator.AssertStringOnLength(name, _name.getLength(), "name");
 
         _name.setData(name);
+        notifyListeners(new NameChanged(this), NameChangedListeners);
     }
 
 
@@ -106,6 +152,7 @@ public class Item implements Cloneable, Comparable<Item> {
         ValueValidator.AssertStringOnLength(info, _info.getLength(), "info");
 
         _info.setData(info);
+        notifyListeners(new InfoChanged(this), InfoChangedListeners);
     }
 
     public float getCost() {
@@ -114,6 +161,7 @@ public class Item implements Cloneable, Comparable<Item> {
 
     public void setCost(float cost) throws Exception {
         _cost.setValue(cost);
+        notifyListeners(new CostChanged(this), CostChangedListeners);
     }
 
     public Category getCategory() {

@@ -1,7 +1,12 @@
 package com.zkdas.oop.model.Customer;
 
+import com.zkdas.oop.model.Customer.Events.AddressChanged;
+import com.zkdas.oop.model.Customer.Events.IAddressEventListener;
 import com.zkdas.oop.service.LimitedFields.LimitedSting;
 import com.zkdas.oop.service.LimitedFields.PostIndex;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Address implements Cloneable {
     /**
@@ -13,6 +18,22 @@ public class Address implements Cloneable {
     private final LimitedSting _street = new LimitedSting(100); // улица, строка, не более 100 символов.
     private final LimitedSting _building = new LimitedSting(10);// номер дома, строка, не более 10 символов.
     private final LimitedSting _apartment = new LimitedSting(10);// номер квартиры/помещения, не более 10 символов.
+    // список обработчиков
+    private List<IAddressEventListener> _listeners = new ArrayList<IAddressEventListener>();
+
+    /**
+     * Подпишет обработчик на событие
+     * @param listener обработчик
+     */
+    public void addListener(IAddressEventListener listener) {
+        _listeners.add(listener);
+    }
+
+    private void notifyListeners(String filed) {
+        for (IAddressEventListener listener : _listeners){
+            listener.processEvent(new AddressChanged(this, filed));
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -79,26 +100,32 @@ public class Address implements Cloneable {
 
     public void setPostIndex(String index) throws Exception {
         _index.setPostIndex(index);
+        notifyListeners("postIndex");
     }
 
     public void setCountry(String country) throws Exception {
         _country.setData(country);
+        notifyListeners("country");
     }
 
     public void setCity(String city) throws Exception {
         _city.setData(city);
+        notifyListeners("city");
     }
 
     public void setStreet(String street) throws Exception {
         _street.setData(street);
+        notifyListeners("street");
     }
 
     public void setBuilding(String building) throws Exception {
         _building.setData(building);
+        notifyListeners("building");
     }
 
     public void setApartment(String apartment) throws Exception {
         _apartment.setData(apartment);
+        notifyListeners("apartment");
     }
 
     public String getPostIndex() {

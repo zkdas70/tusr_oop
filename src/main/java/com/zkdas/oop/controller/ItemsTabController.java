@@ -26,6 +26,12 @@ enum OrderCBOptions{
     CATEGORY("категории", (item1, item2) -> Integer.compare(item1.getCategory().ordinal(), item2.getCategory().ordinal()));
     private String value;
     private Comparator<Item> comparator;
+
+    /**
+     * Создает перечисление
+     * @param value
+     * @param comparator
+     */
     OrderCBOptions(String value, Comparator<Item> comparator){
         this.value = "Сортировка по " + value;
         this.comparator = comparator;
