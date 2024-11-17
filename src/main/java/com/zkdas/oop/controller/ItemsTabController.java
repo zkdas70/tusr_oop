@@ -190,12 +190,6 @@ public class ItemsTabController {
         });
 
         store.getItems().addListener(new ListChangeListener<ItemForList>() {
-            /**
-             * Called after a change has been made to an ObservableList.
-             *
-             * @param c an object representing the change that was done
-             * @see Change
-             */
             @Override
             public void onChanged(Change<? extends ItemForList> c) {
                 c.next();
@@ -208,17 +202,7 @@ public class ItemsTabController {
         });
     }
 
-    public void initialize() {
-        initializeFilters();
-        // устанавливаю выбор значений
-        Category_field.getItems().addAll(Category.values());
-
-        // устанавливает выбор по умолчанию
-        Category_field.setValue(Category.NONE);
-
-        // запрет на изменение id_field
-        id_field.setEditable(false);
-
+    private void initializeItemsList(){
         // Инициализация списка ListView
         items_listView.setItems(store.getItems());
 
@@ -241,7 +225,20 @@ public class ItemsTabController {
                 Category_field.setValue(selectedItem.getCategory());
             }
         });
+    }
 
+    public void initialize() {
+        // устанавливаю выбор значений
+        Category_field.getItems().addAll(Category.values());
+
+        // устанавливает выбор по умолчанию
+        Category_field.setValue(Category.NONE);
+
+        // запрет на изменение id_field
+        id_field.setEditable(false);
+
+        initializeItemsList();
+        initializeFilters();
         initializeSort();
     }
 
