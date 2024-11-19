@@ -1,5 +1,9 @@
 package com.zkdas.oop.model.Customer;
 
+import com.zkdas.oop.model.Customer.Events.AddressChanged;
+import com.zkdas.oop.model.Customer.Events.CustomerChanged;
+import com.zkdas.oop.model.Customer.Events.IAddressEventListener;
+import com.zkdas.oop.model.Customer.Events.ICustomerEventListener;
 import com.zkdas.oop.model.Order.Order;
 import com.zkdas.oop.model.Order.PriorityOrder;
 import com.zkdas.oop.model.Order.PriorityOrderTime;
@@ -13,6 +17,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Customer implements Cloneable{
     /**
@@ -26,6 +31,25 @@ public class Customer implements Cloneable{
     private ArrayList<Order> _orders = new ArrayList<>(); // все заказы покупателя (в виде ссылок)
     private boolean _isPriority; // приоритетный ли покупатель
     private ObservableList<IDiscount> _discounts; // все скидки пользователя
+    // список обработчиков
+    private List<ICustomerEventListener> _listeners = new ArrayList<ICustomerEventListener>();
+
+    /**
+     * Подпишет обработчик на событие
+     * @param listener обработчик
+     */
+    public void addListener(ICustomerEventListener listener) {
+        _listeners.add(listener);
+    }
+
+    /**
+     * Уведомит всех слушателей
+     */
+    private void notifyListeners() {
+        for (ICustomerEventListener listener : _listeners){
+            listener.processEvent(new CustomerChanged(this));
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -114,10 +138,13 @@ public class Customer implements Cloneable{
         ValueValidator.AssertStringOnLength(fulname, _fulname.getLength(), "name");
 
         _fulname.setData(fulname);
+
+        notifyListeners();
     }
 
     public void setAddress(Address address) throws Exception {
         _address = new Address(address); // созданная копия это уже не агрегация, а композиция
+        notifyListeners();
     }
 
     public Cart get_cart() {
@@ -130,6 +157,7 @@ public class Customer implements Cloneable{
 
     public void set_isPriority(boolean _isPriority) {
         this._isPriority = _isPriority;
+        notifyListeners();
     }
 
     /**
@@ -171,6 +199,7 @@ public class Customer implements Cloneable{
 
     public void set_orders(ArrayList<Order> _orders) {
         this._orders = _orders;
+        notifyListeners();
     }
 
     public ObservableList<IDiscount> get_discounts() {

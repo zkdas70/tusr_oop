@@ -19,18 +19,24 @@ public class Address implements Cloneable {
     private final LimitedSting _building = new LimitedSting(10);// номер дома, строка, не более 10 символов.
     private final LimitedSting _apartment = new LimitedSting(10);// номер квартиры/помещения, не более 10 символов.
     // список обработчиков
-    private List<IAddressEventListener> _listeners = new ArrayList<IAddressEventListener>();
+    private final List<IAddressEventListener> _listeners = new ArrayList<IAddressEventListener>();
 
     /**
      * Подпишет обработчик на событие
+     *
      * @param listener обработчик
      */
     public void addListener(IAddressEventListener listener) {
         _listeners.add(listener);
     }
 
+    /**
+     * Уведомит всех слушателей
+     *
+     * @param filed поля что было изменено
+     */
     private void notifyListeners(String filed) {
-        for (IAddressEventListener listener : _listeners){
+        for (IAddressEventListener listener : _listeners) {
             listener.processEvent(new AddressChanged(this, filed));
         }
     }
@@ -65,11 +71,12 @@ public class Address implements Cloneable {
 
     /**
      * Конструктор класса Address
-     * @param index int почтовый индекс, целое шестизначное число
-     * @param country String страна/регион, строка, не более 50 символов
-     * @param citi String город (населенный пункт), строка, не более 50 символов
-     * @param street String лица, строка, не более 100 символов
-     * @param building String номер дома, строка, не более 10 символов
+     *
+     * @param index     int почтовый индекс, целое шестизначное число
+     * @param country   String страна/регион, строка, не более 50 символов
+     * @param citi      String город (населенный пункт), строка, не более 50 символов
+     * @param street    String лица, строка, не более 100 символов
+     * @param building  String номер дома, строка, не более 10 символов
      * @param apartment String номер квартиры/помещения, не более 10 символов
      */
     public Address(String index, String country, String citi, String street, String building, String apartment) throws Exception {
@@ -91,6 +98,7 @@ public class Address implements Cloneable {
 
     /**
      * Копирующей конструктор
+     *
      * @param address Класс унаследованный от ад Address
      */
     public <T extends Address> Address(T address) throws Exception {

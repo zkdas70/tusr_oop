@@ -1,6 +1,8 @@
 package com.zkdas.oop.controller;
 
 import com.zkdas.oop.model.Customer.Address;
+import com.zkdas.oop.model.Customer.Events.AddressChanged;
+import com.zkdas.oop.model.Customer.Events.IAddressEventListener;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -49,16 +51,27 @@ public class AddressController {
         return address;
     }
 
-    /**
-     * Установит данные в поля
-     * @param address класс Address заполненный данными
-     */
-    public void SetAddress(Address address) {
+    private void UpdateAddress(Address address) {
         PostField.setText(String.valueOf(address.getPostIndex()));
         CountryField.setText(address.getCountry());
         CityField.setText(address.getCity());
         StreetField.setText(address.getStreet());
         BuildingField.setText(address.getBuilding());
         ApartmentField.setText(address.getApartment());
+    }
+
+    /**
+     * Установит данные в поля
+     * @param address класс Address заполненный данными
+     */
+    public void SetAddress(Address address) {
+        address.addListener(new IAddressEventListener() {
+            @Override
+            public void processEvent(AddressChanged event) {
+                UpdateAddress((Address) event.getSource());
+            }
+        });
+
+        UpdateAddress(address);
     }
 }

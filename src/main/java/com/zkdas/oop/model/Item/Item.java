@@ -26,6 +26,7 @@ public class Item implements Cloneable, Comparable<Item> {
     private List<IItemEventListener> InfoChangedListeners = new ArrayList<>();
     private List<IItemEventListener> CostChangedListeners = new ArrayList<>();
 
+
     /**
      * Все поддерживаемые ивенты
      */
