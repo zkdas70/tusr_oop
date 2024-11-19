@@ -8,11 +8,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.Date;
-
+/**
+ * Класс модель данных заказа
+ */
 public class Order {
-    /**
-     * Класс модель данных заказа
-     */
     private static final IdGenerator _idGenerator = new IdGenerator();
     private final int _id;
     private final Date _date = new Date(); // создаст текущую дату
@@ -33,9 +32,12 @@ public class Order {
         return false;
     }
 
+    /**
+     * Создаст заказ (Order)
+     * @param customer что сделал заказ
+     */
     public Order(Customer customer) {
         _id = _idGenerator.get_next_id();
-
 
         _address = customer.getAddress();
         _name = customer.getFulname();

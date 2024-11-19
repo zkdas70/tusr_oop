@@ -5,8 +5,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * Класс бальной скидки
+ */
 public class PointsDiscount implements IDiscount, Comparable<PointsDiscount>{
+    // константа максимальной скидки от стоимости
     public static final double MAX_DISCOUNT = 0.30;
+    // константа конверсии стоимости покупки в балы
     public static final double  POINTS_CONVERSION = 0.10;
 
     private int points = 0;

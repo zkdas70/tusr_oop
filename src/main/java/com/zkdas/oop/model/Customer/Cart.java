@@ -4,7 +4,9 @@ import com.zkdas.oop.controller.modelForController.ItemForList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
+/**
+ * Класс модель данных корзина
+ */
 public class Cart implements Cloneable {
     private ObservableList<ItemForList> items = FXCollections.observableArrayList();
 
@@ -29,6 +31,10 @@ public class Cart implements Cloneable {
         return clone;
     }
 
+    /**
+     * Вернет стоимость корщины
+     * @return стоимость
+     */
     public double getAmount(){
         double total = 0;
 
@@ -39,6 +45,10 @@ public class Cart implements Cloneable {
         return total;
     }
 
+    /**
+     * Добавит элемент в корзину
+     * @param item элемент, что надо добавить
+     */
     public void addItem(ItemForList item){
         items.add(item);
     }

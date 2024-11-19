@@ -10,11 +10,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 import java.io.*;
-
+/**
+ * Контролер Главного окна
+ */
 public class MainWindowController {
-    /**
-     * Контролер Главного окна
-     */
     @FXML
     private TabPane mainTabPlate;
     @FXML
@@ -31,7 +30,9 @@ public class MainWindowController {
     private CustomersTabController CustomersTabController;
     private CartsTabController CartsTabController;
     private OrdersTabController OrdersTabController;
-
+    /**
+     * Инициализация контролера
+     */
     public void initialize() throws IOException {
         loadItemsTab();
         loadCustomersTab();
@@ -39,7 +40,9 @@ public class MainWindowController {
         loadOrdersTab();
     }
 
-
+    /**
+     * Загрузка вкладки ItemsTab
+     */
     private void loadItemsTab() throws IOException {
         // указания пути к fxml файлу
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/ItemsTab.fxml"));
@@ -52,6 +55,9 @@ public class MainWindowController {
 
     }
 
+    /**
+     * Загрузка вкладки CustomersTab
+     */
     private void loadCustomersTab() throws IOException {
         // указания пути к fxml файлу
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/CustomersTab.fxml"));
@@ -62,7 +68,9 @@ public class MainWindowController {
         // получаю ссылку на контролер, который был связан с загруженным FXML-файлом.
         CustomersTabController = loader.getController();
     }
-
+    /**
+     * Загрузка вкладки CartsTab
+     */
     private void loadCartsTab() throws IOException {
         // указания пути к fxml файлу
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/CartsTab.fxml"));
@@ -73,6 +81,9 @@ public class MainWindowController {
         // получаю ссылку на контролер, который был связан с загруженным FXML-файлом.
         CartsTabController = loader.getController();
     }
+    /**
+     * Загрузка вкладки OrdersTab
+     */
     private void loadOrdersTab() throws IOException {
         // указания пути к fxml файлу
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zkdas/oop/OrdersTab.fxml"));
@@ -84,6 +95,9 @@ public class MainWindowController {
         OrdersTabController = loader.getController();
     }
 
+    /**
+     * Обработчик нажатия на кнопку "тест"/"сгенерировать элемент"
+     */
     @FXML
     private void menuGenerateElementClick(ActionEvent actionEvent) throws Exception {
         if (containerTabItems.isSelected()) {
@@ -92,7 +106,9 @@ public class MainWindowController {
             CustomersTabController.addCustomer(CustomerFactory.createCustomer());
         }
     }
-
+    /**
+     * Обработчик нажатия на кнопку "тест"/"сгенерировать 10 элементов"
+     */
     @FXML
     private void menuGenerateElementsClick(ActionEvent actionEvent) throws Exception {
         if (containerTabItems.isSelected()) {

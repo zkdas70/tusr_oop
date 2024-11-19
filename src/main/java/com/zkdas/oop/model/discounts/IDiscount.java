@@ -4,6 +4,9 @@ import com.zkdas.oop.model.Item.Item;
 
 import java.util.List;
 
+/**
+ * Базовый интерфейс скидки
+ */
 public interface IDiscount {
     /**
      * Базовый метод: возвращает описательную строку скидки

@@ -10,15 +10,17 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-
+/**
+ * Аля структура
+ */
 class CheckBoxStruct {
-    /**
-     * Аля структура
-     */
     public CheckBox checkBox;
     public IDiscount discount;
 }
 
+/**
+ * Контролер виджета CartsTab
+ */
 public class CartsTabController {
     @FXML
     private ListView<ItemForList> items_listView;
@@ -37,6 +39,9 @@ public class CartsTabController {
     private ArrayList<CheckBoxStruct> discounts = new ArrayList<>();
     private double total_discount = 0.0; // итоговая скидка по всем товарам
 
+    /**
+     * Инициализация контролера
+     */
     public void initialize() {
         Store store = new Store();
         // Инициализация списка ListView
@@ -46,6 +51,9 @@ public class CartsTabController {
         customer_ChoseBox.setItems(store.getCustomers());
     }
 
+    /**
+     * вернет выборного Customer
+     */
     private CustomerForList getSelectedCustomer() {
         return customer_ChoseBox.getValue();
     }
@@ -66,6 +74,9 @@ public class CartsTabController {
         TotalLabel.setText(String.valueOf(customer.get_cart().getAmount() - total_discount));
     }
 
+    /**
+     * Обновит стоимость отображаемую во вкладке
+     */
     private void updateCost() {
         CustomerForList customer = getSelectedCustomer();
         if (customer == null) {
@@ -91,6 +102,10 @@ public class CartsTabController {
         updateDiscounts();
     }
 
+    /**
+     * Обработчик нажатия на кнопку add
+     * добавляет товар в корзину
+     */
     @FXML
     private void add_btn_click(ActionEvent ignoredE) {
         // получаем выбраный элемент
@@ -102,7 +117,10 @@ public class CartsTabController {
             updateCost();
         }
     }
-
+    /**
+     * Обработчик нажатия на кнопку clear
+     * очищает корзину
+     */
     @FXML
     private void clear_btn_click(ActionEvent ignoredE) {
         CustomerForList selectedCustomer = getSelectedCustomer();
@@ -112,6 +130,10 @@ public class CartsTabController {
         }
     }
 
+    /**
+     * Обработчик нажатия на кнопку remove
+     * удалит выбранный товар из корзины
+     */
     @FXML
     private void remove_btn_click(ActionEvent ignoredE) {
         CustomerForList selectedCustomer = getSelectedCustomer();
@@ -122,6 +144,10 @@ public class CartsTabController {
         }
     }
 
+    /**
+     * Обработчик нажатия на кнопку create
+     * создаст заказ
+     */
     @FXML
     private void create_btn_click(ActionEvent ignoredE) {
         CustomerForList selectedCustomer = getSelectedCustomer();
@@ -145,6 +171,9 @@ public class CartsTabController {
         }
     }
 
+    /**
+     * Обработчик выбора Customer-ра
+     */
     @FXML
     private void CustomerListClick(ActionEvent ignoredE) {
         CustomerForList selectedCustomer = getSelectedCustomer();

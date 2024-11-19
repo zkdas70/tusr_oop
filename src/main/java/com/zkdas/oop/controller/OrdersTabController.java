@@ -17,6 +17,9 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * Контролер вкладки OrdersTab
+ */
 public class OrdersTabController {
     @FXML
     private TextField IdField;
@@ -84,8 +87,10 @@ public class OrdersTabController {
         });
     }
 
+    /**
+     * Установка обработчика на выбор категории в выпадавшем списке
+     */
     protected void deliveryTimeEventHandler(){
-        // установка обработчика на выбор категории в выпадавшем списке
         deliveryTime_ChoiceBox.addEventHandler(ActionEvent.ACTION, event -> {
             if (sealedOrder != null && sealedOrder.getClass() == PriorityOrder.class) {
                 // установка в ордере значения время доставки
@@ -103,6 +108,9 @@ public class OrdersTabController {
         PriorityOptionsPlane.setVisible(visible);
     }
 
+    /**
+     * Инициализация контролера
+     */
     public void initialize() throws IOException {
         // установка выборов в ChoiceBox
         StatusChoiceBox.getItems().addAll(OrderStatus.values());
@@ -154,7 +162,9 @@ public class OrdersTabController {
         AmountLabel.setText(String.valueOf(selectedOrder.getPrise())); // установка цены
     }
 
-
+    /**
+     * Обработчик статуса заказа
+     */
     @FXML
     protected void StatusChoiceBoxAction(ActionEvent ignoredEvent) {
         Order selectionOrder = order_tableView.getSelectionModel().getSelectedItem();

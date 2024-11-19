@@ -3,11 +3,10 @@ package com.zkdas.oop.model.Order;
 import com.zkdas.oop.model.Customer.Customer;
 
 import java.util.Date;
-
+/**
+ * Класс PriorityOrder класс модель данных для приоритетного заказа
+ */
 public class PriorityOrder extends Order {
-    /**
-     * Класс PriorityOrder класс модель данных для приоритетного заказа
-     */
     private PriorityOrderTime _desiredDeliveryTime;
     private Date _desiredDeliveryDate;
 

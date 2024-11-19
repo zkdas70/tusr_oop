@@ -8,10 +8,10 @@ import com.zkdas.oop.service.LimitedFields.PostIndex;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс модель данных Address
+ */
 public class Address implements Cloneable {
-    /**
-     * Класс модель данных Address
-     */
     private final PostIndex _index = new PostIndex();// почтовый индекс, целое шестизначное число.
     private final LimitedSting _country = new LimitedSting(50); // страна/регион, строка, не более 50 символов.
     private final LimitedSting _city = new LimitedSting(50); // город (населенный пункт), строка, не более 50 символов.

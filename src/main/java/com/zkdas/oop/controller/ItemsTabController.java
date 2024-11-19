@@ -228,7 +228,9 @@ public class ItemsTabController {
             }
         });
     }
-
+    /**
+     * Инициализация контролера
+     */
     public void initialize() {
         // устанавливаю выбор значений
         Category_field.getItems().addAll(Category.values());
@@ -272,15 +274,16 @@ public class ItemsTabController {
 
         Category_field.setValue(selected_item.getCategory());
     }
-
-    public ArrayList<ItemForList> getItems() {
-        return new ArrayList<>(store.getItems());
-    }
-
+    /**
+     * Добавит элемент в глобальный список элементов
+     * УСТАРЕЛО
+     */
     public <T extends Item> void addItem(T item) throws Exception {
         store.getItems().add(new ItemForList(item));
     }
-
+    /**
+     * Обработчик нажатия на кнопку add
+     */
     @FXML
     private void add_btn_click(ActionEvent ignoredE) throws Exception {
         // обработчик нажатия на кнопку add
@@ -300,9 +303,11 @@ public class ItemsTabController {
         }
     }
 
+    /**
+     * Обработчик нажатия на кнопку remove
+     */
     @FXML
     private void remove_btn_click(ActionEvent ignoredE) {
-        // обработчик нажатия на кнопку remove
         // если выбрано поле
         if (selected_item != null) {
             store.getItems().remove(selected_item);
