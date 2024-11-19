@@ -13,11 +13,10 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Date;
-
+/**
+ * Класс модель данных Customer
+ */
 public class Customer implements Cloneable{
-    /**
-     * Класс модель данных Customer
-     */
     private static final IdGenerator _idGenerator = new IdGenerator(); // генератор id принажавший не объекту, а классу
     private final int _id;// целочисленное readonly-поле, хранящее уникальный номер товара.
     protected final LimitedSting _fulname = new LimitedSting(200);//строковое поле с полным именем покупателя (Фамилия имя отчество), до 200 символов.

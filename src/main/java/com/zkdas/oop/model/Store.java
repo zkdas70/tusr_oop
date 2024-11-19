@@ -6,10 +6,11 @@ import com.zkdas.oop.model.Order.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * Модель Store класс содержащий данные программы в статических полях
+ * (я считаю что они должны быть в единственном экземпляре)
+ */
 public class Store {
-    /**
-     * Модель Store класс содержащий списки
-     */
     static private ObservableList<ItemForList> _items;
     static private ObservableList<CustomerForList> _customers;
     static private ObservableList<Order> _orders;
@@ -28,12 +29,21 @@ public class Store {
         }
     }
 
+    /**
+     * Вернет ссылку на глобальный список Item
+     */
     public ObservableList<ItemForList> getItems() {
         return _items; // ObservableList ссылочный тип данных - вернет ссылку на _items
     }
+    /**
+     * Вернет ссылку на глобальный список Customer
+     */
     public ObservableList<CustomerForList> getCustomers() {
         return _customers; // ObservableList ссылочный тип данных - вернет ссылку на _customers
     }
+    /**
+     * Вернет ссылку на глобальный список Order
+     */
     public ObservableList<Order> getOrders() {
         return _orders;
     }

@@ -20,11 +20,11 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.Optional;
 
-
+/**
+ * Контролер виджета CustomersTab
+ */
 public class CustomersTabController {
-    /**
-     * Контролер виджета CustomersTab
-     */
+
     @FXML
     private VBox interfaceContainer;
 

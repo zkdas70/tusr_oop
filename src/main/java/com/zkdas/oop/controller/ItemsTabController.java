@@ -12,11 +12,10 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
-
+/**
+ * Контролер виджета ItemsTab
+ */
 public class ItemsTabController {
-    /**
-     * Контролер виджета ItemsTab
-     */
     @FXML
     private ChoiceBox<Category> Category_field;
     // текстовые поля
@@ -36,6 +35,9 @@ public class ItemsTabController {
 
     private ObservableList<ItemForList> items; // список элементов в ListView
 
+    /**
+     * Очистит поля во вкладке
+     */
     private void clearFields() {
         id_field.setText("");
         cost_field.setText("");
@@ -43,6 +45,9 @@ public class ItemsTabController {
         description_field.setText("");
     }
 
+    /**
+     * Инициализация контролера
+     */
     public void initialize() {
         // устанавливаю выбор значений
         Category_field.getItems().addAll(Category.values());
@@ -79,14 +84,16 @@ public class ItemsTabController {
         });
     }
 
-    public ArrayList<ItemForList> getItems() {
-        return new ArrayList<>(items);
-    }
-
+    /**
+     * Добавит элемент в глобальный список элементов
+     * УСТАРЕЛО
+     */
     public <T extends Item> void addItem(T item) throws Exception {
         items.add(new ItemForList(item));
     }
-
+    /**
+     * Обработчик нажатия на кнопку add
+     */
     @FXML
     private void add_btn_click(ActionEvent ignoredE) throws Exception {
         // обработчик нажатия на кнопку add
@@ -106,9 +113,11 @@ public class ItemsTabController {
         }
     }
 
+    /**
+     * Обработчик нажатия на кнопку remove
+     */
     @FXML
     private void remove_btn_click(ActionEvent ignoredE) {
-        // обработчик нажатия на кнопку remove
         // если выбрано поле
         if (selected_index >= 0) {
             items.remove(selected_index);

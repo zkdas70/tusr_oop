@@ -6,15 +6,20 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * Класс Процентной скидки
+ */
 public class PercentDiscount implements IDiscount, Comparable<PercentDiscount>{
     @Override
     public int compareTo(@NotNull PercentDiscount obj) {
         return Integer.compare(this.percent, obj.percent);
     }
+    // константа максимальной скидки
+    public static int PERCENT_DISCOUNT = 10;
 
-    public static double PERCENT_DISCOUNT = 0;
-
+    // категория на которую скидка
     private final Category category;
+    // текущий процент скидки
     private int percent;
 
     public PercentDiscount(Category category) {
@@ -79,8 +84,8 @@ public class PercentDiscount implements IDiscount, Comparable<PercentDiscount>{
             }
         }
         percent += (int) Math.floor(prise / 1_000);
-        if (percent > 10){
-            percent = 10;
+        if (percent > PERCENT_DISCOUNT){
+            percent = PERCENT_DISCOUNT;
         }
     }
 }
