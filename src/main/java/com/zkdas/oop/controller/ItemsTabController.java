@@ -118,7 +118,9 @@ public class ItemsTabController {
         // установка отфильтрованных элементов в listView
         items_listView.setItems(items);
     }
-
+    /**
+     * Инициализация фильтрации
+     */
     private void initializeFilters() {
         Filter<ItemForList> FindFilter = (in_list) -> SafeFilterTools.name_filter(in_list,
                 FXCollections.observableArrayList(), FindTF.getText());
@@ -188,7 +190,9 @@ public class ItemsTabController {
             filter();
         });
     }
-
+    /**
+     * Инициализация сортировки
+     */
     private void initializeSort(){
         // список с выбором сортировки
         OrderChB.getItems().addAll(OrderCBOptions.values());
@@ -209,7 +213,9 @@ public class ItemsTabController {
 
         });
     }
-
+    /**
+     * Инициализация items_listView
+     */
     private void initializeItemsList(){
         // Инициализация списка ListView
         items_listView.setItems(store.getItems());
@@ -245,15 +251,18 @@ public class ItemsTabController {
         initializeFilters();
         initializeSort();
 
+        // обработчик добавления элемента в store._items
         store.getItems().addListener(new ListChangeListener<ItemForList>() {
             @Override
             public void onChanged(Change<? extends ItemForList> c) {
                 c.next();
                 if (c.wasAdded()) {
                     for (Item item : c.getAddedSubList()){
+                        // обработчик изменения Item-ма
                         item.addEventListener(Item.EventType.All, new IItemEventListener() {
                             @Override
                             public <T extends ItemEvent> void processEvent(T event) {
+                                // если элемент равен выбранному, то надо обновить данные
                                 if (event.getSource() == selected_item){
                                     refreshData();
                                 }
@@ -265,6 +274,9 @@ public class ItemsTabController {
         });
     }
 
+    /**
+     * Заполняет поля во вкладке данными
+     */
     private void refreshData() {
         // задаем значения полям
         id_field.setText(String.valueOf(this.selected_item.getId()));

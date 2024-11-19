@@ -1,5 +1,6 @@
 package com.zkdas.oop.controller;
 
+import com.zkdas.oop.model.Store;
 import com.zkdas.oop.service.dataFactory.CustomerFactory;
 import com.zkdas.oop.service.dataFactory.ItemFactory;
 import javafx.event.ActionEvent;

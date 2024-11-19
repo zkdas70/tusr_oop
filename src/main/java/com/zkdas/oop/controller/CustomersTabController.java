@@ -69,7 +69,9 @@ public class CustomersTabController {
 
         discounts_listView.setItems(selected_customer.get_discounts());
     }
-
+    /**
+     * Инициализация контролера
+     */
     public void initialize() throws IOException {
         // запрет на изменение id_field
         id_field.setEditable(false);
@@ -96,7 +98,7 @@ public class CustomersTabController {
                 this.refreshData();
             }
         });
-
+        // обработчик галочки приоритетного покупателя (при нажатии записывает состояние в покупателя)
         isPriority.setOnAction(event -> {
             CustomerForList selectedItem = customers_listView.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
@@ -104,7 +106,7 @@ public class CustomersTabController {
             }
         });
 
-        // задаем
+        // задаем отображаемый текст в discounts_listView
         discounts_listView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(IDiscount item, boolean empty) {
@@ -117,11 +119,12 @@ public class CustomersTabController {
             }
         });
         
-        //
+        // обработчик добавления элемента в items
         items.addListener((ListChangeListener<CustomerForList>) c -> {
             c.next();
             if (c.wasAdded()) {
                 for (Customer customer : c.getAddedSubList()) {
+                    // обработка изменения customer-ра
                     customer.addListener(new ICustomerEventListener() {
                         /**
                          * Метод для обработки события
@@ -152,11 +155,18 @@ public class CustomersTabController {
         });
     }
 
-
+    /**
+     * Добавит элемент в глобальный список элементов
+     * УСТАРЕЛО
+     */
     public <T extends Customer> void addCustomer(T customer) throws Exception {
         items.add(new CustomerForList(customer));
     }
 
+    /**
+     * Обработчик нажатия на кнопку add
+     * добавит customer-ра
+     */
     @FXML
     private void add_btn_click(ActionEvent ignoredE) throws Exception {
         // обработчик нажатия на кнопку add
@@ -175,7 +185,10 @@ public class CustomersTabController {
             clearField();
         }
     }
-
+    /**
+     * Обработчик нажатия на кнопку remove
+     * удалит выбранного customer-ра
+     */
     @FXML
     private void remove_btn_click(ActionEvent ignoredE) {
         // обработчик нажатия на кнопку remove
@@ -185,7 +198,10 @@ public class CustomersTabController {
             selected_customer = null;
         }
     }
-
+    /**
+     * Обработчик нажатия на кнопку add (в скидках)
+     * добавит скидку
+     */
     @FXML
     private void add_discount_btn_click(ActionEvent ignoredE) {
         if (selected_customer == null) {
@@ -206,7 +222,10 @@ public class CustomersTabController {
 
 
     }
-
+    /**
+     * Обработчик нажатия на кнопку remove (в скидках)
+     * удалит скидку
+     */
     @FXML
     private void remove_discount_btn_click(ActionEvent ignoredE) {
         // обработчик нажатия на кнопку remove
