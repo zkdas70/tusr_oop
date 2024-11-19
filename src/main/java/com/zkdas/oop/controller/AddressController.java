@@ -32,6 +32,7 @@ public class AddressController {
     public Address getAddressFromFields(DataRequiredValidator validator) throws Exception {
         Address address = new Address();
 
+        // валидация данных
         validator.validatePostField(PostField);
         validator.validateField(CountryField, address.getCountryLen());
         validator.validateField(CityField, address.getCityLen());
@@ -39,6 +40,7 @@ public class AddressController {
         validator.validateField(BuildingField, address.getBuildingLen());
         validator.validateField(ApartmentField, address.getApartmentLen());
 
+        // если вали успешна
         if (validator.IsNotErrors()) {
             address.setPostIndex(PostField.getText());
             address.setCountry(CountryField.getText());
@@ -51,27 +53,16 @@ public class AddressController {
         return address;
     }
 
-    private void UpdateAddress(Address address) {
+    /**
+     * Установит данные в поля
+     * @param address класс Address заполненный данными
+     */
+    public void SetAddress(Address address) {
         PostField.setText(String.valueOf(address.getPostIndex()));
         CountryField.setText(address.getCountry());
         CityField.setText(address.getCity());
         StreetField.setText(address.getStreet());
         BuildingField.setText(address.getBuilding());
         ApartmentField.setText(address.getApartment());
-    }
-
-    /**
-     * Установит данные в поля
-     * @param address класс Address заполненный данными
-     */
-    public void SetAddress(Address address) {
-        address.addListener(new IAddressEventListener() {
-            @Override
-            public void processEvent(AddressChanged event) {
-                UpdateAddress((Address) event.getSource());
-            }
-        });
-
-        UpdateAddress(address);
     }
 }

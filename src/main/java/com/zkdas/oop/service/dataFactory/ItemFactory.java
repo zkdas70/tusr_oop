@@ -2,6 +2,7 @@ package com.zkdas.oop.service.dataFactory;
 
 import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Item.Item;
+import com.zkdas.oop.service.EnumUtils;
 import net.datafaker.Faker;
 
 import java.util.Locale;
@@ -21,7 +22,7 @@ public class ItemFactory {
 
         float productPrice = Float.parseFloat(faker.commerce().price().replace(',', '.'));
 
-        Category category = Category.NONE;
+        Category category = EnumUtils.getRandomEnum(Category.class);
         // Вывод информации о товаре
         return new Item(productName, productDescription, productPrice, category);
     }

@@ -31,7 +31,7 @@ public class Item implements Cloneable, Comparable<Item> {
      * Все поддерживаемые ивенты
      */
     public enum EventType{
-        NameChanged, InfoChanged, CostChanged;
+        NameChanged, InfoChanged, CostChanged, All;
     }
 
     /**
@@ -50,6 +50,13 @@ public class Item implements Cloneable, Comparable<Item> {
             case CostChanged:
                 CostChangedListeners.add(listener);
                 break;
+            case All:
+                NameChangedListeners.add(listener);
+                InfoChangedListeners.add(listener);
+                CostChangedListeners.add(listener);
+                break;
+            default:
+                throw new RuntimeException("Unknown event type: " + type);
         }
     }
 

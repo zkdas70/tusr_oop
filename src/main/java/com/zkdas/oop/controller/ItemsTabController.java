@@ -2,6 +2,8 @@ package com.zkdas.oop.controller;
 
 import com.zkdas.oop.controller.modelForController.ItemForList;
 import com.zkdas.oop.model.Item.Category;
+import com.zkdas.oop.model.Item.Events.IItemEventListener;
+import com.zkdas.oop.model.Item.Events.ItemEvent;
 import com.zkdas.oop.model.Item.Item;
 import com.zkdas.oop.model.Store;
 import com.zkdas.oop.service.DataTools.DataTools;
@@ -82,7 +84,7 @@ public class ItemsTabController {
     @FXML
     private ListView<ItemForList> items_listView;
 
-    private ItemForList selected_item = null; // -1 техническое значение (выбрано нечего)
+    private ItemForList selected_item = null; // null техническое значение (выбрано нечего)
 
     private HashMap<String, Filter<ItemForList>> filters = new HashMap<>(); // словарь активных фильтров
 
@@ -219,16 +221,10 @@ public class ItemsTabController {
             // получение выделенного элемента (как объекта)
             ItemForList selectedItem = SelectionModel.getSelectedItem();
             if (selectedItem != null) {
-                // получение id выделенного элемента
+                // получение выделенного элемента
                 selected_item = SelectionModel.getSelectedItem();
 
-                // задаем значения полям
-                id_field.setText(String.valueOf(selectedItem.getId()));
-                cost_field.setText(String.valueOf(selectedItem.getCost()));
-                name_field.setText(selectedItem.getName());
-                description_field.setText(selectedItem.getInfo());
-
-                Category_field.setValue(selectedItem.getCategory());
+                this.refreshData();
             }
         });
     }
@@ -246,6 +242,35 @@ public class ItemsTabController {
         initializeItemsList();
         initializeFilters();
         initializeSort();
+
+        store.getItems().addListener(new ListChangeListener<ItemForList>() {
+            @Override
+            public void onChanged(Change<? extends ItemForList> c) {
+                c.next();
+                if (c.wasAdded()) {
+                    for (Item item : c.getAddedSubList()){
+                        item.addEventListener(Item.EventType.All, new IItemEventListener() {
+                            @Override
+                            public <T extends ItemEvent> void processEvent(T event) {
+                                if (event.getSource() == selected_item){
+                                    refreshData();
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    private void refreshData() {
+        // задаем значения полям
+        id_field.setText(String.valueOf(this.selected_item.getId()));
+        cost_field.setText(String.valueOf(this.selected_item.getCost()));
+        name_field.setText(this.selected_item.getName());
+        description_field.setText(this.selected_item.getInfo());
+
+        Category_field.setValue(selected_item.getCategory());
     }
 
     public ArrayList<ItemForList> getItems() {

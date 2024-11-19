@@ -3,12 +3,17 @@ package com.zkdas.oop.controller;
 import com.zkdas.oop.controller.modelForController.CustomerForList;
 import com.zkdas.oop.model.Customer.Address;
 import com.zkdas.oop.model.Customer.Customer;
+import com.zkdas.oop.model.Customer.Events.AddressChanged;
+import com.zkdas.oop.model.Customer.Events.CustomerChanged;
+import com.zkdas.oop.model.Customer.Events.IAddressEventListener;
+import com.zkdas.oop.model.Customer.Events.ICustomerEventListener;
 import com.zkdas.oop.model.Item.Category;
 import com.zkdas.oop.model.Store;
 import com.zkdas.oop.model.discounts.IDiscount;
 import com.zkdas.oop.model.discounts.PercentDiscount;
 import com.zkdas.oop.model.discounts.PointsDiscount;
 import com.zkdas.oop.service.Validators.DataRequiredValidator;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,7 +48,7 @@ public class CustomersTabController {
     @FXML
     private ListView<IDiscount> discounts_listView;
 
-    private int selected_index = -1;// -1 техническое значение (выбрано нечего)
+    private Customer selected_customer = null;// null техническое значение (выбрано нечего)
 
     private ObservableList<CustomerForList> items; // список элементов в ListView
     private Address address;
@@ -51,6 +56,18 @@ public class CustomersTabController {
     private void clearField() {
         id_field.setText("");
         ful_name_field.setText("");
+    }
+
+    /**
+     * Задает значения полям из selected_customer
+     */
+    private void refreshData(){
+        id_field.setText(String.valueOf(selected_customer.getId()));
+        ful_name_field.setText(selected_customer.getFulname());
+        addressController.SetAddress(selected_customer.getAddress());
+        isPriority.setSelected(selected_customer.is_Priority());
+
+        discounts_listView.setItems(selected_customer.get_discounts());
     }
 
     public void initialize() throws IOException {
@@ -72,20 +89,11 @@ public class CustomersTabController {
         // Обработчик клика customers_listView
         customers_listView.setOnMouseClicked(event -> {
             MultipleSelectionModel<CustomerForList> SelectionModel = customers_listView.getSelectionModel();
+            // получение выделенного элемента
+            selected_customer = SelectionModel.getSelectedItem();
 
-            // получение выделенного элемента (как объекта)
-            CustomerForList selectedCustomer = SelectionModel.getSelectedItem();
-            if (selectedCustomer != null) {
-                // получение id выделенного элемента
-                selected_index = SelectionModel.getSelectedIndex();
-
-                // задаем значения полям
-                id_field.setText(String.valueOf(selectedCustomer.getId()));
-                ful_name_field.setText(selectedCustomer.getFulname());
-                addressController.SetAddress(selectedCustomer.getAddress());
-                isPriority.setSelected(selectedCustomer.is_Priority());
-
-                discounts_listView.setItems(selectedCustomer.get_discounts());
+            if (selected_customer != null) {
+                this.refreshData();
             }
         });
 
@@ -106,6 +114,40 @@ public class CustomersTabController {
                     return;
                 }
                 setText(item.getInfo());
+            }
+        });
+        
+        //
+        items.addListener((ListChangeListener<CustomerForList>) c -> {
+            c.next();
+            if (c.wasAdded()) {
+                for (Customer customer : c.getAddedSubList()) {
+                    customer.addListener(new ICustomerEventListener() {
+                        /**
+                         * Метод для обработки события
+                         * @param event событие
+                         */
+                        @Override
+                        public void processEvent(CustomerChanged event) {
+                            if (selected_customer == event.getSource()){
+                                refreshData();
+                            }
+                        }
+                    });
+                    // обработка изменения адреса
+                    customer.getAddress().addListener(new IAddressEventListener() {
+                        /**
+                         * Метод для обработки события
+                         * @param event событие
+                         */
+                        @Override
+                        public void processEvent(AddressChanged event) {
+                            if (selected_customer.getAddress() == event.getSource()){
+                                addressController.SetAddress(selected_customer.getAddress());
+                            }
+                        }
+                    });
+                }
             }
         });
     }
@@ -137,16 +179,16 @@ public class CustomersTabController {
     @FXML
     private void remove_btn_click(ActionEvent ignoredE) {
         // обработчик нажатия на кнопку remove
-        if (selected_index >= 0) {
-            items.remove(selected_index);
+        if (selected_customer != null) {
+            items.remove(selected_customer);
             clearField();
-            selected_index = -1;
+            selected_customer = null;
         }
     }
 
     @FXML
     private void add_discount_btn_click(ActionEvent ignoredE) {
-        if (selected_index < 0) {
+        if (selected_customer == null) {
             return;
         }
 
@@ -169,7 +211,7 @@ public class CustomersTabController {
     private void remove_discount_btn_click(ActionEvent ignoredE) {
         // обработчик нажатия на кнопку remove
         IDiscount discount = discounts_listView.getSelectionModel().getSelectedItem();
-        if (discount != null && selected_index > -1 && discount.getClass() != PointsDiscount.class) {
+        if (discount != null && selected_customer != null && discount.getClass() != PointsDiscount.class) {
             customers_listView.getSelectionModel().getSelectedItem().get_discounts().remove(discount);
         }
     }
